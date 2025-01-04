@@ -1,26 +1,26 @@
 :root {
-  --bg-primary: 13, 13, 13;
-  --bg-secondary: 28, 28, 30;
-  --bg-tertiary: 46, 46, 48;
+  --bg-primary: 50, 52, 55;
+  --bg-secondary: 101, 102, 105;
+  --bg-tertiary: 40, 42, 44;
 
   // Fuentes
-  --fnt-primary: 231, 231, 231;
-  --fnt-secondary: 119, 119, 120;
-  --fnt-tertiary: 255, 255, 255;
+  --fnt-primary: 255, 255, 255;
+  --fnt-secondary: 102, 103, 104;
+  --fnt-tertiary: 138, 138, 138;
 
   // Principales
-  --tn-primary: 252, 21, 92;
+  --tn-primary: 255, 222, 77;
   --tn-secondary: 0, 0, 0;
 
   // --
 
   --xl-font-size: 3rem;
   --h1-font-size: 2rem;
-  --h2-font-size: 1.5rem;
-  --h3-font-size: 1.4rem;
-  --h4-font-size: 1.3rem;
-  --h5-font-size: 1.2rem;
-  --p-font-size: 1.15rem;
+  --h2-font-size: 1.4rem;
+  --h3-font-size: 1.3rem;
+  --h4-font-size: 1.2rem;
+  --h5-font-size: 1.1rem;
+  --p-font-size: 1rem;
 }
 
 $fXl: var(--xl-font-size);
@@ -52,12 +52,12 @@ $big-screen: 1350px;
 $radius: 10px;
 $padding: 10px;
 $icon: 20px;
-$family-size: 11px;
+$family-size: 14px;
 $fontBase: 'Segoe UI Mono', 'Roboto Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono',
   'Segoe UI Emoji';
 $fontTitle: var(--titleFont);
 $font1: var(--paragraphFont);
-$font2: var(--exclamationFont);
+$font2: var(--paragraphFont);
 
 // Basic colors
 $error: rgb(228 30 56);

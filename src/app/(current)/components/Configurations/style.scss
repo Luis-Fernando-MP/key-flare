@@ -1,0 +1,20 @@
+@use '@sass/config/vars' as v;
+@use '@sass/utils/defs' as d;
+
+.appConf {
+  @include d.flex($ali: center);
+
+  padding: 0 v.$padding v.$padding v.$padding;
+
+  &-nav {
+    @include d.flex($dir: row, $ali: center);
+
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+
+    &__link.active {
+      color: rgb(v.$tn1);
+    }
+  }
+}

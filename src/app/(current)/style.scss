@@ -1,2 +1,58 @@
 @use '@sass/config/vars' as v;
 @use '@sass/utils/defs' as d;
+
+.appFlare {
+  display: grid;
+  grid-template-areas:
+    'logo options'
+    'config typing'
+    'config footer';
+  grid-template-columns: 400px 1fr;
+  grid-template-rows: 80px 1fr 250px;
+  gap: v.$padding;
+
+  width: 100%;
+  height: 100%;
+
+  &-logo,
+  &-configurations,
+  &-typing,
+  &-footer,
+  &-typingOptions {
+    transform: scale(1);
+    padding: v.$padding;
+    opacity: 1;
+  }
+
+  &.playing {
+    grid-template-areas:
+      'logo '
+      ' typing';
+    grid-template-columns: 1fr;
+    grid-template-rows: 50px 1fr;
+
+    .invisibleBlock {
+      display: none;
+    }
+  }
+
+  &-logo {
+    grid-area: logo;
+  }
+
+  &-configurations {
+    grid-area: config;
+  }
+
+  &-typing {
+    grid-area: typing;
+  }
+
+  &-typingOptions {
+    grid-area: options;
+  }
+
+  &-footer {
+    grid-area: footer;
+  }
+}
