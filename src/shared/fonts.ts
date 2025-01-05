@@ -2,7 +2,7 @@ import { Lexend, Roboto_Mono } from 'next/font/google'
 
 export const titleFont = Lexend({
   subsets: ['latin'],
-  weight: ['700', '600', '500'],
+  weight: ['700', '600', '500', '300'],
   variable: '--titleFont'
 })
 

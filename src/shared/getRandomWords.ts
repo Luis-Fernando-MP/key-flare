@@ -8,5 +8,7 @@ export function getRandomWords(): string {
     randomWords.push(shuffledWords[randomIndex])
     shuffledWords.splice(randomIndex, 1)
   }
-  return randomWords.join(' ')
+  const newPhrase = randomWords.join(' ')
+  const firstLetter = newPhrase.slice(0, 1).toUpperCase()
+  return firstLetter + newPhrase.slice(1, newPhrase.length)
 }

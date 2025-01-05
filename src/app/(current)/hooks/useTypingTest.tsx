@@ -1,9 +1,12 @@
+import { Howl } from 'howler'
 import { useEffect, useRef } from 'react'
 
 import useGameStore, { EGameStatus } from '../store/useGameStore'
 import usePhraseStore from '../store/usePhraseStore'
 
-const allowedKeysRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9,.?!:;"'()\-\s]$/
+const allowedKeysRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9,.!:;\-\s]$/
+const SPACE_KEY = ' '
+const BACKSPACE_KEY = 'Backspace'
 
 const useTypingTest = () => {
   const { gameStatus, setGameStatus, setTotalErrors, setTotalLetters, setTotalCorrect } =
@@ -24,13 +27,16 @@ const useTypingTest = () => {
   useEffect(() => {
     const handleKeyPress = (e: globalThis.KeyboardEvent) => {
       const target = e.target as HTMLElement
+      if (!allowedKeysRegex.test(e.key) && e.key !== BACKSPACE_KEY && !e.shiftKey) {
+        return e.preventDefault()
+      }
       const isInputField =
         target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable
       if (isInputField && target.id !== 'typingTestInput') return
       handleInputDown(e)
       $inputRef.current?.focus()
+      console.log('---', e.shiftKey, e.key)
       if (gameStatus !== EGameStatus.IDLE) return
-      if (!allowedKeysRegex.test(e.key)) return
       setGameStatus(EGameStatus.PLAYING)
     }
     document.addEventListener('keydown', handleKeyPress)
@@ -63,12 +69,24 @@ const useTypingTest = () => {
     setTotalLetters(words.join('').length)
   }
 
+  const handleAudioPlay = () => {
+    try {
+      const sound = new Howl({
+        src: ['/music/keyboard1.mp3'],
+        volume: 1,
+        rate: 1
+      })
+      sound.play()
+    } catch (error) {
+      console.log('Error:', error)
+    }
+  }
+
   const handleInputDown = (e: globalThis.KeyboardEvent) => {
     if (!$paragraphRef.current || !$inputRef.current) return
     const $currentWord = $paragraphRef.current.querySelector('.word.active')
     const $currentLetter = $currentWord?.querySelector('.letter.active')
     if (!$currentWord || !$currentLetter) return
-    const SPACE_KEY = ' '
     if (e.key === SPACE_KEY) {
       e.preventDefault()
       const $nextWord = $currentWord.nextElementSibling
@@ -93,7 +111,6 @@ const useTypingTest = () => {
       return
     }
 
-    const BACKSPACE_KEY = 'Backspace'
     if (e.key === BACKSPACE_KEY) {
       const $prevWord = $currentWord.previousElementSibling
       const $prevLetter = $currentLetter.previousElementSibling
@@ -128,7 +145,6 @@ const useTypingTest = () => {
     const $currentWord = $paragraphRef.current.querySelector('.word.active') as HTMLElement
     const $currentLetter = $currentWord?.querySelector('.letter.active') as HTMLElement
     if (!$currentWord || !$currentLetter) return
-
     const valueCurrentWord = $currentWord.innerText.trim()
     $inputRef.current.maxLength = valueCurrentWord.length
     const $allLetters = $currentWord.querySelectorAll('.letter')
@@ -144,7 +160,7 @@ const useTypingTest = () => {
       const letterClass = isCorrect ? 'correct' : 'incorrect'
       $letter.classList.add(letterClass)
     })
-
+    handleAudioPlay()
     $currentLetter.classList.remove('active', 'is-last')
     const inputLength = $inputRef.current.value.length
     const $nextActiveLetter = $allLetters[inputLength]

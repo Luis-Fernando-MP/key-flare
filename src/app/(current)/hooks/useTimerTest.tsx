@@ -1,37 +1,20 @@
 import { getRandomWords } from '@/shared/getRandomWords'
-import { validateTimeFormat } from '@/shared/time'
-import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef } from 'react'
+import { formatTimeFromSeconds, validateTimeFormat } from '@/shared/time'
+import { ChangeEvent, KeyboardEvent, useCallback, useRef } from 'react'
 import toast from 'react-hot-toast'
 
-import useGameStore, { EGameStatus } from '../store/useGameStore'
+import useGameStore from '../store/useGameStore'
 import useGameTimeStore from '../store/useGameTimeStore'
 import usePhraseStore from '../store/usePhraseStore'
 import useRenderTypingStore from '../store/useRenderTypingStore'
 
-const formatTime = (value: number) => value.toString().padStart(2, '0')
-
 const useTimerTest = () => {
-  const { gameStatus, setGameStatus, resetGameStore } = useGameStore()
+  const { resetGameStore } = useGameStore()
   const { setPhrase } = usePhraseStore()
   const { gameTime, setGameTime } = useGameTimeStore()
   const { setRenderKey } = useRenderTypingStore()
 
   const $inputRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    if (gameStatus !== EGameStatus.PLAYING) return
-    const intervalId = setInterval(() => {
-      if (gameTime === 0) {
-        clearInterval(intervalId)
-        setGameStatus(EGameStatus.TIMEOUT)
-        return
-      }
-      const newTime = gameTime - 1
-      if (newTime >= 0) return setGameTime(newTime)
-    }, 1000)
-
-    return () => clearInterval(intervalId)
-  }, [gameStatus, gameTime, setGameTime, setGameStatus])
 
   const setValidationTime = useCallback(() => {
     if (!$inputRef.current) return
@@ -68,10 +51,6 @@ const useTimerTest = () => {
     }
   }
 
-  const hours = formatTime(Math.floor(gameTime / 3600))
-  const minutes = formatTime(Math.floor((gameTime % 3600) / 60))
-  const seconds = formatTime(gameTime % 60)
-
   const handleClickDefaultTime = (tm: number) => {
     if (gameTime === tm) return
     setGameTime(tm)
@@ -79,9 +58,7 @@ const useTimerTest = () => {
   }
 
   return {
-    hours,
-    minutes,
-    seconds,
+    ...formatTimeFromSeconds(gameTime),
     gameTime,
     $inputRef,
     handleClickDefaultTime,

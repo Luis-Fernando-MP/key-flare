@@ -18,3 +18,13 @@ export function validateTimeFormat(input: string) {
   })
   return totalSeconds
 }
+
+export function formatTimeFromSeconds(secondsTime: number) {
+  const parseFormat = (value: number) => value.toString().padStart(2, '0')
+
+  const hours = parseFormat(Math.floor(secondsTime / 3600))
+  const minutes = parseFormat(Math.floor((secondsTime % 3600) / 60))
+  const seconds = parseFormat(secondsTime % 60)
+
+  return { hours, minutes, seconds }
+}

@@ -5,12 +5,14 @@ import { TimerIcon } from 'lucide-react'
 import { type JSX } from 'react'
 
 import useTimerTest from '../../hooks/useTimerTest'
+import useGameStore, { EGameStatus } from '../../store/useGameStore'
 import { DEFAULT_TIME_GAME } from '../../store/useGameTimeStore'
+import CounterTest from '../CounterTest'
 import './style.scss'
 
 const defaultTimes = [15, DEFAULT_TIME_GAME, 60, 90, 120]
 
-const TimerTest = (): JSX.Element => {
+const TimerTestComponent = (): JSX.Element | null => {
   const {
     hours,
     minutes,
@@ -22,6 +24,7 @@ const TimerTest = (): JSX.Element => {
     handleChangeTime,
     setValidationTime
   } = useTimerTest()
+
   return (
     <article className='timerApp'>
       <div className='timerApp-wrapper'>
@@ -62,6 +65,12 @@ const TimerTest = (): JSX.Element => {
       </p>
     </article>
   )
+}
+
+const TimerTest = (): JSX.Element => {
+  const gameStatus = useGameStore(s => s.gameStatus)
+  if (gameStatus === EGameStatus.PLAYING) return <CounterTest />
+  return <TimerTestComponent />
 }
 
 export default TimerTest

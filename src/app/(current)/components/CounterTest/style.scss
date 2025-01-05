@@ -1,0 +1,12 @@
+@use '@sass/config/vars' as v;
+@use '@sass/utils/defs' as d;
+
+.counterTest {
+  width: fit-content;
+
+  &-time {
+    font-size: v.$fXl;
+    font-weight: 300;
+    color: rgb(v.$tn1);
+  }
+}
