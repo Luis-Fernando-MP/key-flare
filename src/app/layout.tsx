@@ -5,7 +5,7 @@ import type { JSX, ReactNode } from 'react'
 import { Toaster } from 'react-hot-toast'
 
 import './globals.css'
-import { metadata } from './metadata'
+import { metadata, viewport } from './metadata'
 import Providers from './providers'
 import './style.scss'
 
@@ -36,4 +36,4 @@ const RootLayout = async ({ children }: IRootLayout): Promise<JSX.Element> => {
 }
 
 export default RootLayout
-export { metadata }
+export { metadata, viewport }

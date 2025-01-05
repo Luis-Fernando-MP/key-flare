@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://key-flare.vercel.app'),
   title: 'Key Flare',
   description:
     'Pon a prueba y mejora tu velocidad de escritura con Key Flare, un clon de Monkeytype creado para fines educativos. ¡Compite contra ti mismo y domina el teclado!',
@@ -34,9 +35,10 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true
-  },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1
   }
+}
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1
 }

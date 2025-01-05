@@ -1,8 +1,12 @@
+import dynamic from 'next/dynamic'
 import type { JSX } from 'react'
 
-import NavConfigurations from '../NavConfigurations'
 import ConfigurationsList from './ConfigurationsList'
 import './style.scss'
+
+const NavConfigurations = dynamic(() => import('../NavConfigurations'), {
+  ssr: false
+})
 
 interface IConfigurations {
   className: string

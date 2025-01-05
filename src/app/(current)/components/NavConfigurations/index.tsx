@@ -7,7 +7,7 @@ import type { JSX } from 'react'
 
 import { routesNavConfigurations } from './routes'
 
-const defaultHash = window.location.hash.substring(1) || Object.keys(routesNavConfigurations)[0]
+const defaultHash = window?.location.hash.substring(1) || Object.keys(routesNavConfigurations)[0]
 
 const NavConfigurations = (): JSX.Element => {
   const [activeHash, setActiveHash] = useState(defaultHash)

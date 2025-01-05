@@ -1,0 +1,85 @@
+@use '@sass/config/vars' as v;
+@use '@sass/utils/defs' as d;
+
+.typingTest {
+  overflow: hidden;
+  justify-content: center;
+
+  @include d.flex($ali: center, $gap: v.$padding * 2);
+
+  &-input {
+    position: absolute;
+    z-index: -1;
+    top: -100%;
+    opacity: 0;
+  }
+
+  &-phrase {
+    @include d.flex($dir: row);
+
+    flex-wrap: wrap;
+    justify-content: center;
+
+    width: 80%;
+
+    font-size: v.$fH1;
+    color: rgb(v.$fn3);
+    text-align: center;
+  }
+
+  .word {
+    border-bottom: 1.5px solid transparent;
+    transition: border-color 0.3s ease-in-out;
+
+    &.marked {
+      border-color: v.$error;
+    }
+  }
+
+  .letter {
+    position: relative;
+
+    &.active::before {
+      content: '';
+
+      position: absolute;
+      top: 0;
+      left: -2px;
+
+      display: grid;
+      place-content: center;
+
+      width: 2px;
+      height: 100%;
+
+      font-size: 14px;
+
+      background-color: rgb(v.$tn1);
+
+      animation: 1s blink infinite ease-in-out;
+    }
+
+    @keyframes blink {
+      0%,
+      25% {
+        opacity: 1;
+      }
+
+      75% {
+        opacity: 0;
+      }
+    }
+
+    &.active.is-last::before {
+      left: 100%;
+    }
+
+    &.correct {
+      color: rgb(v.$fn1);
+    }
+
+    &.incorrect {
+      color: v.$error;
+    }
+  }
+}
