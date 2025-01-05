@@ -5,7 +5,7 @@
   overflow: hidden;
   justify-content: center;
 
-  @include d.flex($ali: center, $gap: v.$padding * 2);
+  @include d.flex($ali: center, $gap: v.$padding * 2.5);
 
   &-input {
     position: absolute;

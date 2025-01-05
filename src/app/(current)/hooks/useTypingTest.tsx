@@ -35,7 +35,6 @@ const useTypingTest = () => {
       if (isInputField && target.id !== 'typingTestInput') return
       handleInputDown(e)
       $inputRef.current?.focus()
-      console.log('---', e.shiftKey, e.key)
       if (gameStatus !== EGameStatus.IDLE) return
       setGameStatus(EGameStatus.PLAYING)
     }
@@ -78,7 +77,7 @@ const useTypingTest = () => {
       })
       sound.play()
     } catch (error) {
-      console.log('Error:', error)
+      console.error('Error:', error)
     }
   }
 
