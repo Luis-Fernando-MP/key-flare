@@ -1,5 +1,5 @@
 import { BeerIcon, EarthIcon, HashIcon, KeyboardIcon, QuoteIcon } from 'lucide-react'
-import type { JSX } from 'react'
+import { type JSX, memo } from 'react'
 
 import './style.scss'
 
@@ -36,4 +36,4 @@ const TypingOptions = ({ className }: ITypingOptions): JSX.Element => {
   )
 }
 
-export default TypingOptions
+export default memo(TypingOptions)

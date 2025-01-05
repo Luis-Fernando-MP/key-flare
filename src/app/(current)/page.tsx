@@ -18,8 +18,8 @@ const Page = (): JSX.Element => {
   const { gameStatus, setGameStatus } = useGameStore()
 
   if (gameStatus === EGameStatus.FINISHED) {
-    push('/results')
-    setGameStatus(EGameStatus.IDLE)
+    // push('/results')
+    // setGameStatus(EGameStatus.IDLE)
   }
 
   return (

@@ -1,19 +1,20 @@
 'use client'
 
-import type { JSX } from 'react'
+import { type JSX } from 'react'
 
 import useTypingTest from '../../hooks/useTypingTest'
+import useRenderTypingStore from '../../store/useRenderTypingStore'
 import Letter from './Letter'
 import Word from './Word'
 
-const GameTyping = (): JSX.Element => {
+const GameTypingComponent = (): JSX.Element => {
   const { $paragraphRef, $inputRef, words, handleInputUp } = useTypingTest()
 
   return (
     <>
       <p className='typingTest-phrase' ref={$paragraphRef}>
         {words.map((word, index) => {
-          const key = `${index}-letter`
+          const key = `${index}-${word}`
           const letters = word.split('')
           return (
             <Word key={key}>
@@ -37,6 +38,11 @@ const GameTyping = (): JSX.Element => {
       />
     </>
   )
+}
+
+const GameTyping = (): JSX.Element => {
+  const renderKey = useRenderTypingStore(s => s.renderKey)
+  return <GameTypingComponent key={renderKey} />
 }
 
 export default GameTyping

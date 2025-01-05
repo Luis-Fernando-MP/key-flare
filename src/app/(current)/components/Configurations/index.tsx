@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import type { JSX } from 'react'
+import { type JSX, memo } from 'react'
 
 import ConfigurationsList from './ConfigurationsList'
 import './style.scss'
@@ -20,4 +20,4 @@ const Configurations = ({ className }: IConfigurations): JSX.Element => {
   )
 }
 
-export default Configurations
+export default memo(Configurations)

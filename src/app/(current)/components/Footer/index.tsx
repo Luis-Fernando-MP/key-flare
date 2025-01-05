@@ -4,7 +4,7 @@ import Midudev from '@/shared/assets/Midudev'
 import MonkeyType from '@/shared/assets/MonkeyType'
 import { FigmaIcon, GithubIcon, MailIcon, MessageCircleCodeIcon } from 'lucide-react'
 import Link from 'next/link'
-import type { JSX } from 'react'
+import { type JSX, memo } from 'react'
 
 import './style.scss'
 
@@ -76,4 +76,4 @@ const Footer = ({ className }: IFooter): JSX.Element => {
   )
 }
 
-export default Footer
+export default memo(Footer)

@@ -1,12 +1,15 @@
 import { useEffect, useRef } from 'react'
 
 import useGameStore, { EGameStatus } from '../store/useGameStore'
+import usePhraseStore from '../store/usePhraseStore'
 
 const allowedKeysRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9,.?!:;"'()\-\s]$/
 
 const useTypingTest = () => {
-  const { phrase, gameStatus, setGameStatus, setTotalErrors, setTotalLetters, setTotalCorrect } =
+  const { gameStatus, setGameStatus, setTotalErrors, setTotalLetters, setTotalCorrect } =
     useGameStore()
+  const { phrase } = usePhraseStore()
+
   const words = phrase.split(' ')
   const $inputRef = useRef<HTMLInputElement>(null)
   const $paragraphRef = useRef<HTMLParagraphElement>(null)
@@ -16,7 +19,7 @@ const useTypingTest = () => {
     const $firstWord = $paragraphRef.current.querySelector('.word')
     $firstWord?.classList.add('active')
     $firstWord?.querySelector('.letter')?.classList.add('active')
-  }, [])
+  }, [phrase])
 
   useEffect(() => {
     const handleKeyPress = (e: globalThis.KeyboardEvent) => {

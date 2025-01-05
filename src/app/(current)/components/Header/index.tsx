@@ -1,6 +1,6 @@
 import Logo from '@/shared/assets/Logo'
 import Link from 'next/link'
-import type { JSX } from 'react'
+import { type JSX, memo } from 'react'
 
 import './style.scss'
 
@@ -17,4 +17,4 @@ const Header = ({ className }: IHeader): JSX.Element => {
   )
 }
 
-export default Header
+export default memo(Header)
