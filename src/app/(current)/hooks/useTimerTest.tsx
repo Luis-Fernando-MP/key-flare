@@ -1,4 +1,3 @@
-import { getRandomWords } from '@/shared/getRandomWords'
 import { formatTimeFromSeconds, validateTimeFormat } from '@/shared/time'
 import { ChangeEvent, KeyboardEvent, useCallback, useRef } from 'react'
 import toast from 'react-hot-toast'
@@ -7,12 +6,15 @@ import useGameStore from '../store/useGameStore'
 import useGameTimeStore from '../store/useGameTimeStore'
 import usePhraseStore from '../store/usePhraseStore'
 import useRenderTypingStore from '../store/useRenderTypingStore'
+import usePhraseGenerator from './usePhraseGenerator'
 
 const useTimerTest = () => {
   const { resetGameStore } = useGameStore()
-  const { setPhrase } = usePhraseStore()
   const { gameTime, setGameTime } = useGameTimeStore()
   const { setRenderKey } = useRenderTypingStore()
+  const { type, setPhrase } = usePhraseStore()
+
+  const { changePhrase } = usePhraseGenerator()
 
   const $inputRef = useRef<HTMLInputElement>(null)
 
@@ -35,9 +37,10 @@ const useTimerTest = () => {
       $fieldGame.value = ''
       resetGameStore()
       setRenderKey(renderKey)
-      setPhrase(getRandomWords())
+
+      setPhrase(changePhrase(type))
     },
-    [resetGameStore, setRenderKey, setPhrase]
+    [resetGameStore, setRenderKey, type]
   )
 
   const handleValidationTime = (e: ChangeEvent<HTMLInputElement>) => {
