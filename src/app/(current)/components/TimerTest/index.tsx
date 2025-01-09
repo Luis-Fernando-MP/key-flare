@@ -10,7 +10,7 @@ import { DEFAULT_TIME_GAME } from '../../store/useGameTimeStore'
 import CounterTest from '../CounterTest'
 import './style.scss'
 
-const defaultTimes = [15, DEFAULT_TIME_GAME, 60, 90, 120]
+const defaultTimes = [10, 20, DEFAULT_TIME_GAME, 60, 90, 120]
 
 const TimerTestComponent = (): JSX.Element | null => {
   const {

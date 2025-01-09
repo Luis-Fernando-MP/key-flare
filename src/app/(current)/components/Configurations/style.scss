@@ -1,20 +1,107 @@
 @use '@sass/config/vars' as v;
 @use '@sass/utils/defs' as d;
+@use '@sass/utils/scrollbar' as *;
 
 .appConf {
   @include d.flex($ali: center);
 
-  padding: 0 v.$padding v.$padding v.$padding;
-
   &-nav {
-    @include d.flex($dir: row, $ali: center);
-
     flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
+    width: 90%;
+    padding: v.$padding;
+    background-color: rgb(v.$bg1);
+
+    @include d.flex($dir: row, $ali: center);
 
     &__link.active {
       color: rgb(v.$tn1);
+    }
+  }
+
+  &-list {
+    @extend %scroll-hidden;
+
+    scroll-behavior: smooth;
+    overflow: scroll;
+    width: 100%;
+    padding-bottom: v.$padding * 10;
+
+    @include d.flex($ali: center, $gap: v.$padding * 3);
+
+    &__group {
+      @include d.flex($gap: v.$padding * 2.5);
+
+      width: 90%;
+      padding-bottom: v.$padding * 3.5;
+      border-bottom: 1.5px dashed rgb(v.$bg2);
+
+      &:last-child {
+        border: none;
+      }
+    }
+  }
+
+  &-sectionControl {
+    overflow: hidden;
+
+    @include d.flex($gap: v.$padding * 1.5);
+
+    &__options {
+      @include d.flex($dir: row, $ali: left);
+
+      flex-wrap: wrap;
+
+      button {
+        min-width: 35px;
+        min-height: 35px;
+        padding: 3px 5px;
+
+        color: rgb(v.$fn1, 0.7);
+
+        background-color: rgb(v.$bg2);
+        border-radius: 5px;
+      }
+
+      button.active {
+        color: rgb(v.$bg1);
+        background-color: rgb(v.$fn1);
+      }
+
+      input {
+        width: 100px;
+        padding: 5px;
+
+        background-color: transparent;
+        border: 2px solid rgb(v.$bg2);
+        border-radius: 5px;
+      }
+    }
+
+    &__range {
+      cursor: col-resize;
+
+      position: relative;
+      top: 0;
+      left: 0;
+
+      overflow: hidden;
+
+      width: 100%;
+      height: 100%;
+
+      background-color: rgba(v.$bg2);
+
+      &::-webkit-slider-thumb,
+      &::-moz-range-thumb {
+        width: 4px;
+        height: 70%;
+
+        appearance: none;
+        background: rgb(v.$bg3);
+        border: 2px solid rgb(var(v.$fn2));
+        border-radius: 5px;
+        box-shadow: -200px 0 50px 185px rgb(v.$bg3);
+      }
     }
   }
 }

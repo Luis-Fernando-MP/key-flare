@@ -6,15 +6,12 @@ import useGameStore from '../store/useGameStore'
 import useGameTimeStore from '../store/useGameTimeStore'
 import usePhraseStore from '../store/usePhraseStore'
 import useRenderTypingStore from '../store/useRenderTypingStore'
-import usePhraseGenerator from './usePhraseGenerator'
 
 const useTimerTest = () => {
   const { resetGameStore } = useGameStore()
   const { gameTime, setGameTime } = useGameTimeStore()
   const { setRenderKey } = useRenderTypingStore()
   const { type, setPhrase } = usePhraseStore()
-
-  const { changePhrase } = usePhraseGenerator()
 
   const $inputRef = useRef<HTMLInputElement>(null)
 
@@ -38,7 +35,8 @@ const useTimerTest = () => {
       resetGameStore()
       setRenderKey(renderKey)
 
-      setPhrase(changePhrase(type))
+      setPhrase()
+      // type en
     },
     [resetGameStore, setRenderKey, type]
   )

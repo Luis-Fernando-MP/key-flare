@@ -4,7 +4,6 @@ import { acl } from '@/shared/acl'
 import { BeerIcon, EarthIcon, HashIcon, KeyboardIcon, QuoteIcon, RegexIcon } from 'lucide-react'
 import { type JSX, memo } from 'react'
 
-import usePhraseGenerator from '../../hooks/usePhraseGenerator'
 import usePhraseStore, { ETypePhrase } from '../../store/usePhraseStore'
 import './style.scss'
 
@@ -29,7 +28,6 @@ const typePhrases = {
 
 const TypingOptions = ({ className }: ITypingOptions): JSX.Element => {
   const { type, setTypePhrase, setPhrase } = usePhraseStore()
-  const { changePhrase } = usePhraseGenerator()
 
   return (
     <section className={`${className}`}>
@@ -41,7 +39,8 @@ const TypingOptions = ({ className }: ITypingOptions): JSX.Element => {
               key={value.name}
               className={`typingOptions-action ${acl(type === value.name)}`}
               onClick={() => {
-                setPhrase(changePhrase(value.name))
+                setPhrase({ phraseTYpe: value.name })
+                // value.name
                 setTypePhrase(value.name)
               }}
             >

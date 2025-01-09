@@ -16,10 +16,10 @@ type GameContextType = {
   setTotalLetters: (letters: number) => void
   setTotalCorrect: (correct: number) => void
   setTotalErrors: (errors: number) => void
-  resetGameStore: () => void
+  resetGameStore: (gameStatus?: EGameStatus) => void
 }
 
-const useGameStore = create<GameContextType>(set => ({
+const useGameStore = create<GameContextType>((set, get) => ({
   gameStatus: EGameStatus.IDLE,
   totalLetters: 0,
   totalCorrect: 0,
@@ -28,9 +28,9 @@ const useGameStore = create<GameContextType>(set => ({
   setTotalLetters: totalLetters => set({ totalLetters }),
   setTotalCorrect: totalCorrect => set({ totalCorrect }),
   setTotalErrors: totalErrors => set({ totalErrors }),
-  resetGameStore: () => {
+  resetGameStore: (gameStatus = EGameStatus.IDLE) => {
     set({
-      gameStatus: EGameStatus.IDLE,
+      gameStatus,
       totalLetters: 0,
       totalCorrect: 0,
       totalErrors: 0

@@ -7,7 +7,7 @@
     'logo options'
     'config typing'
     'config footer';
-  grid-template-columns: 400px 1fr;
+  grid-template-columns: 370px 1fr;
   grid-template-rows: 80px 1fr 250px;
   gap: v.$padding;
 
@@ -20,8 +20,14 @@
   &-footer,
   &-typingOptions {
     transform: scale(1);
-    padding: v.$padding;
     opacity: 1;
+  }
+
+  &-logo,
+  &-typing,
+  &-footer,
+  &-typingOptions {
+    padding: v.$padding;
   }
 
   &.playing {
