@@ -67,6 +67,17 @@
         background-color: rgb(v.$fn1);
       }
 
+      button.flare {
+        display: grid;
+        place-content: center;
+
+        svg {
+          width: 15px;
+          height: 15px;
+          filter: grayscale(1);
+        }
+      }
+
       input {
         width: 100px;
         padding: 5px;

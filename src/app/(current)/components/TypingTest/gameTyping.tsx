@@ -1,18 +1,25 @@
 'use client'
 
+import { acl } from '@/shared/acl'
 import { type JSX } from 'react'
 
 import useTypingTest from '../../hooks/useTypingTest'
+import useGameRulesStore, { EModeOption } from '../../store/useGameRulesStore'
 import useRenderTypingStore from '../../store/useRenderTypingStore'
 import Letter from './Letter'
 import Word from './Word'
 
 const GameTypingComponent = (): JSX.Element => {
   const { $paragraphRef, $inputRef, words, handleInputUp } = useTypingTest()
+  const { modeOption, fontSize, cursorStyle } = useGameRulesStore()
 
   return (
     <>
-      <p className='typingTest-phrase' ref={$paragraphRef}>
+      <p
+        className={`typingTest-phrase ${cursorStyle} ${acl(modeOption === EModeOption.BLIND, 'blind')} ${acl(modeOption === EModeOption.FOCUSED, 'focus')}`}
+        style={{ fontSize: `${fontSize / 10}rem` }}
+        ref={$paragraphRef}
+      >
         {words.map((word, index) => {
           const key = `${index}-${word}`
           const letters = word.split('')

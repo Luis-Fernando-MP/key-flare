@@ -1,11 +1,13 @@
+import { normalizeCharacter } from '@/shared/text'
 import { Howl } from 'howler'
 import { useCallback, useEffect, useRef } from 'react'
 
-import useGameRulesStore, { EGameDifficulty } from '../store/useGameRulesStore'
+import useGameRulesStore, { EFreedomMode, EGameDifficulty } from '../store/useGameRulesStore'
 import useGameStore, { EGameStatus } from '../store/useGameStore'
 import useGameTimeStore from '../store/useGameTimeStore'
 import usePhraseStore from '../store/usePhraseStore'
 import useRenderTypingStore from '../store/useRenderTypingStore'
+import useTestThresholds from '../store/useTestThresholds'
 
 const allowedKeysRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9,.!:;\-\s]$/
 const SPACE_KEY = ' '
@@ -21,13 +23,16 @@ const useTypingTest = () => {
     resetGameStore
   } = useGameStore()
   const { phrase } = usePhraseStore()
-  const { gameDifficulty, restartKey } = useGameRulesStore()
+  const { gameDifficulty, restartKey, freedomMode, writeValidation, writingVolume } =
+    useGameRulesStore()
   const { setRenderKey } = useRenderTypingStore()
   const { setGameTime } = useGameTimeStore()
 
   const words = phrase.split(' ')
   const $inputRef = useRef<HTMLInputElement>(null)
   const $paragraphRef = useRef<HTMLParagraphElement>(null)
+
+  const { minSpeed, minPrecision } = useTestThresholds()
 
   useEffect(() => {
     if (!$paragraphRef.current) return
@@ -39,10 +44,7 @@ const useTypingTest = () => {
   useEffect(() => {
     const handleKeyPress = (e: globalThis.KeyboardEvent) => {
       const target = e.target as HTMLElement
-      console.log(e.key, e.key === restartKey, restartKey)
-      if (e.key === restartKey) {
-        return restartGame()
-      }
+      if (e.key === restartKey) return restartGame()
 
       if (!allowedKeysRegex.test(e.key) && e.key !== BACKSPACE_KEY && !e.shiftKey) {
         return e.preventDefault()
@@ -98,18 +100,20 @@ const useTypingTest = () => {
     setRenderKey(uniqueKey)
   }
 
-  const handleAudioPlay = () => {
+  const handleAudioPlay = useCallback(() => {
+    console.log(writingVolume / 100)
+
     try {
       const sound = new Howl({
         src: ['/music/keyboard1.mp3'],
-        volume: 1,
+        volume: writingVolume / 100,
         rate: 1
       })
       sound.play()
     } catch (error) {
       console.error('Error:', error)
     }
-  }
+  }, [writingVolume])
 
   const handleInputDown = useCallback(
     (e: globalThis.KeyboardEvent) => {
@@ -154,9 +158,8 @@ const useTypingTest = () => {
         const $prevLetter = $currentLetter.previousElementSibling
         if (!$prevWord && !$prevLetter) return e.preventDefault()
         if (!$prevWord) return
-
         const $wordMarked = $paragraphRef.current.querySelector('.word.marked')
-        if (!$wordMarked || $prevLetter) return
+        if ((!$wordMarked && freedomMode === EFreedomMode.DISABLED) || $prevLetter) return
 
         e.preventDefault()
         $prevWord.classList.remove('marked')
@@ -167,6 +170,7 @@ const useTypingTest = () => {
         const $letterToGo = $prevWord.querySelector('.letter:last-child')
 
         if (!$letterToGo) return
+
         $letterToGo.classList.add('active')
         const prevLetters = $prevWord.querySelectorAll('.letter.correct, .letter.incorrect')
         $inputRef.current.value = Array.from(prevLetters)
@@ -185,26 +189,33 @@ const useTypingTest = () => {
     const $currentWord = $paragraphRef.current.querySelector('.word.active') as HTMLElement
     const $currentLetter = $currentWord?.querySelector('.letter.active') as HTMLElement
     if (!$currentWord || !$currentLetter) return
+
     const valueCurrentWord = $currentWord.innerText.trim()
     $inputRef.current.maxLength = valueCurrentWord.length
+
     const $allLetters = $currentWord.querySelectorAll('.letter')
     $allLetters.forEach($letter => $letter.classList.remove('correct', 'incorrect'))
 
     const inputValue = $inputRef.current.value.split('')
+    const isASpecialLetter = /[^\w\s]/
+
     inputValue.forEach((char, index) => {
       const $letter = $allLetters[index]
       const letterToCheck = valueCurrentWord[index]
       if (!$letter) return
 
-      const isCorrect = char === letterToCheck
+      let isCorrect = char === letterToCheck
 
-      if (!isCorrect && gameDifficulty === EGameDifficulty.MASTER && char !== '´') {
-        handleFinishGame()
+      if (writeValidation) {
+        isCorrect = isASpecialLetter.test(letterToCheck)
+          ? true
+          : normalizeCharacter(char) === normalizeCharacter(letterToCheck)
       }
 
       const letterClass = isCorrect ? 'correct' : 'incorrect'
       $letter.classList.add(letterClass)
     })
+
     handleAudioPlay()
     $currentLetter.classList.remove('active', 'is-last')
     const inputLength = $inputRef.current.value.length
@@ -212,6 +223,7 @@ const useTypingTest = () => {
     if ($nextActiveLetter) {
       return $nextActiveLetter.classList.add('active')
     }
+
     $currentLetter.classList.add('active', 'is-last')
     const $nextWord = !!$currentWord.nextElementSibling
     if ($nextWord) return

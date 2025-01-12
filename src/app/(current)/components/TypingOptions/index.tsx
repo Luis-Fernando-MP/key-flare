@@ -40,7 +40,6 @@ const TypingOptions = ({ className }: ITypingOptions): JSX.Element => {
               className={`typingOptions-action ${acl(type === value.name)}`}
               onClick={() => {
                 setPhrase({ phraseTYpe: value.name })
-                // value.name
                 setTypePhrase(value.name)
               }}
             >

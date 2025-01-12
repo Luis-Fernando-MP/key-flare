@@ -9,12 +9,7 @@
 
   &-input {
     position: absolute;
-
-    // z-index: -1;
     z-index: 2;
-
-    // top: -100%;
-    // opacity: 0;
     top: 0;
     left: 50%;
   }
@@ -30,61 +25,124 @@
     font-size: v.$fH1;
     color: rgb(v.$fn3);
     text-align: center;
-  }
 
-  .word {
-    border-bottom: 1.5px solid transparent;
-    transition: border-color 0.3s ease-in-out;
+    .word {
+      border-bottom: 1.5px solid transparent;
+      transition: border-color 0.3s ease-in-out;
 
-    &.marked {
-      border-color: v.$error;
+      &.marked {
+        border-color: v.$error;
+      }
     }
-  }
 
-  .letter {
-    position: relative;
+    .letter {
+      position: relative;
 
-    &.active::before {
-      content: '';
+      &.active::before {
+        content: '';
+        position: absolute;
+        background-color: rgb(v.$tn1);
+        animation: 1s blink infinite ease-in-out;
+      }
 
-      position: absolute;
+      @keyframes blink {
+        0%,
+        25% {
+          opacity: 1;
+        }
+
+        75% {
+          opacity: 0;
+        }
+      }
+
+      &.active.is-last::before {
+        left: 100%;
+      }
+
+      &.correct {
+        color: rgb(v.$fn1);
+      }
+
+      &.incorrect {
+        color: v.$error;
+      }
+    }
+
+    &.LINE .letter.active::before {
       top: 0;
       left: -2px;
-
-      display: grid;
-      place-content: center;
-
       width: 2px;
       height: 100%;
-
-      font-size: 14px;
-
-      background-color: rgb(v.$tn1);
-
-      animation: 1s blink infinite ease-in-out;
     }
 
-    @keyframes blink {
-      0%,
-      25% {
-        opacity: 1;
+    &.DOT .letter.active::before {
+      top: 50%;
+      left: -10px;
+      transform: translateY(-50%);
+
+      width: 10px;
+      height: 10px;
+
+      border-radius: 50%;
+    }
+
+    &.DASH .letter.active::before {
+      bottom: 0;
+      left: -15px;
+      width: 15px;
+      height: 5px;
+    }
+
+    &.flare .letter.active::before {
+      bottom: 0;
+      left: -15px;
+
+      width: 15px;
+      height: 15px;
+
+      background-color: transparent;
+      background-image: url('/logo.svg');
+      background-repeat: no-repeat;
+      background-size: 15px;
+    }
+
+    // LINE = '|',
+    // DOT = '•',
+    // DASH = '-',
+    // TILDE = '~'
+
+    &.blind {
+      .word.marked {
+        border-color: transparent;
       }
 
-      75% {
-        opacity: 0;
+      .letter.incorrect,
+      .letter.correct {
+        color: rgb(v.$fn3);
+      }
+
+      .letter {
+        color: rgb(v.$fn1);
       }
     }
 
-    &.active.is-last::before {
-      left: 100%;
-    }
+    &.focus {
+      .word.marked {
+        border-color: rgb(v.$fn2);
+      }
 
-    &.correct {
-      color: rgb(v.$fn1);
-    }
+      .letter.incorrect {
+        color: rgb(v.$fn2);
+      }
 
-    &.incorrect {
-      color: v.$error;
+      .letter.correct {
+        color: transparent;
+      }
+
+      .letter {
+        color: rgb(v.$fn1);
+      }
     }
   }
 }

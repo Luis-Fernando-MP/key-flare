@@ -1,0 +1,35 @@
+@use '@sass/config/vars' as v;
+@use '@sass/utils/defs' as d;
+@use '@sass/utils/scrollbar' as *;
+
+.counterStyle-bar {
+  position: relative;
+
+  overflow: hidden;
+
+  width: 100%;
+  height: 25px;
+
+  background-color: rgb(v.$bg3);
+  border-radius: v.$radius * 0.3;
+
+  &__progress {
+    width: 50%;
+    height: 100%;
+
+    background-color: rgb(v.$bg2);
+    border-radius: v.$radius * 0.3;
+
+    transition: width 1s linear;
+  }
+
+  span {
+    position: absolute;
+    top: 50%;
+    right: v.$padding;
+    transform: translateY(-50%);
+
+    color: rgb(v.$fn3);
+    text-shadow: 0 0 10px rgb(0 0 0);
+  }
+}

@@ -1,6 +1,7 @@
 import { acl } from '@/shared/acl'
+import Logo from '@/shared/assets/Logo'
 import RangeSlider from '@/shared/components/RangeSlider'
-import type { JSX } from 'react'
+import { type JSX, useRef } from 'react'
 
 import useConfigurations from '../../hooks/useConfigurations'
 import {
@@ -14,8 +15,12 @@ import {
   ERestartKey,
   EWritingSound
 } from '../../store/useGameRulesStore'
+import useTestThresholds from '../../store/useTestThresholds'
 
 const ConfigurationsList = (): JSX.Element => {
+  const $minPrecisionRef = useRef<HTMLInputElement>(null)
+  const $minSpeedRef = useRef<HTMLInputElement>(null)
+
   const {
     gameDifficulty,
     restartKey,
@@ -28,6 +33,8 @@ const ConfigurationsList = (): JSX.Element => {
     fontSize,
     webFont,
     cursorStyle,
+    writeValidation,
+
     handleGameDifficulty,
     handleRestartKey,
     handleModeOption,
@@ -38,8 +45,11 @@ const ConfigurationsList = (): JSX.Element => {
     handleCounterStyle,
     handleFontSize,
     handleWebFont,
-    handleCursorStyle
+    handleCursorStyle,
+    handleWriteValidation
   } = useConfigurations()
+
+  const { minSpeed, minPrecision, setMinPrecision, setMinSpeed } = useTestThresholds()
 
   return (
     <article className='appConf-list'>
@@ -70,7 +80,7 @@ const ConfigurationsList = (): JSX.Element => {
         <section className='appConf-sectionControl'>
           <h5 className='appConf-sectionControl__title'>Tipo de reinicio</h5>
           <p className='appConf-sectionControl__description'>
-            Usa una tecla para reiniciar o ir a la pagina de prueba rápidamente
+            Usa una tecla {restartKey} para reiniciar o ir a la pagina de prueba rápidamente
           </p>
           <div className='appConf-sectionControl__options'>
             {Object.values(ERestartKey).map(option => (
@@ -88,7 +98,12 @@ const ConfigurationsList = (): JSX.Element => {
         <section className='appConf-sectionControl'>
           <h5 className='appConf-sectionControl__title'>Opciones de Modo</h5>
           <p className='appConf-sectionControl__description'>
-            Siempre muestra el historial de la palabra
+            {modeOption === EModeOption.AGILE &&
+              'Uso típico, se muestra el historial de palabras y el teclado virtual'}
+            {modeOption === EModeOption.BLIND &&
+              'No se resaltan los errores ni las palabras incorrectas. Te ayuda a concentrarte en la velocidad bruta.'}
+            {modeOption === EModeOption.FOCUSED &&
+              'Unicamente se resaltan las palabras restantes, esto ayuda a una mejor concentración de los objetivos'}
           </p>
           <div className='appConf-sectionControl__options'>
             {Object.values(EModeOption).map(option => (
@@ -111,21 +126,40 @@ const ConfigurationsList = (): JSX.Element => {
             Falla si tu velocidad baja de un límite.
           </p>
           <div className='appConf-sectionControl__options'>
-            <input type='number' defaultValue={100} />
-            <button className='active'>Apagado</button>
-            <button>Personalizado</button>
+            <input type='number' defaultValue={minSpeed} ref={$minSpeedRef} min={80} max={500} />
+            <button
+              className='active'
+              onClick={() => {
+                if (!$minSpeedRef.current) return
+                setMinSpeed(Number($minSpeedRef.current.value))
+              }}
+            >
+              Cambiar velocidad
+            </button>
           </div>
         </section>
-
         <section className='appConf-sectionControl'>
           <h5 className='appConf-sectionControl__title'>Precisión Mínima</h5>
           <p className='appConf-sectionControl__description'>
             Falla si tu precisión baja de un límite.
           </p>
           <div className='appConf-sectionControl__options'>
-            <input type='number' defaultValue={100} />
-            <button className='active'>Apagado</button>
-            <button>Personalizado</button>
+            <input
+              type='number'
+              defaultValue={minPrecision}
+              min={80}
+              ref={$minPrecisionRef}
+              max={500}
+            />
+            <button
+              className='active'
+              onClick={() => {
+                if (!$minPrecisionRef.current) return
+                setMinPrecision(Number($minPrecisionRef.current.value))
+              }}
+            >
+              Cambiar precisión
+            </button>
           </div>
         </section>
       </div>
@@ -153,46 +187,22 @@ const ConfigurationsList = (): JSX.Element => {
         </section>
 
         <section className='appConf-sectionControl'>
-          <h5 className='appConf-sectionControl__title'>Termina por error</h5>
+          <h5 className='appConf-sectionControl__title'>Ignorar caracteres especiales</h5>
           <p className='appConf-sectionControl__description'>
-            En el modo letra, la prueba se detiene al cometer un error.
-          </p>
-          <div className='appConf-sectionControl__options'>
-            {Object.values(EEndOnError).map(option => (
-              <button
-                key={option}
-                className={acl(endOnError === option)}
-                onClick={() => handleEndOnError(option)}
-              >
-                {option}
-              </button>
-            ))}
-          </div>
-        </section>
-
-        <section className='appConf-sectionControl'>
-          <h5 className='appConf-sectionControl__title'>Caracteres especiales</h5>
-          <p className='appConf-sectionControl__description'>
-            Permite evitar la validación de caracteres especiales.
+            Permite evitar la validación de caracteres especiales como las tildes.
           </p>
           <div className='appConf-sectionControl__options'>
             <button
-              className={acl(writingSound === EWritingSound.BEEP)}
-              onClick={() => handleWritingSound(EWritingSound.BEEP)}
+              className={acl(!writeValidation)}
+              onClick={() => handleWriteValidation(!writeValidation)}
             >
-              beep
+              Desactivado
             </button>
             <button
-              className={acl(writingSound === EWritingSound.PENTATONIC)}
-              onClick={() => handleWritingSound(EWritingSound.PENTATONIC)}
+              className={acl(writeValidation)}
+              onClick={() => handleWriteValidation(!writeValidation)}
             >
-              pentatonic
-            </button>
-            <button
-              className={acl(writingSound === EWritingSound.POP)}
-              onClick={() => handleWritingSound(EWritingSound.POP)}
-            >
-              pop
+              Activado
             </button>
           </div>
         </section>
@@ -232,25 +242,7 @@ const ConfigurationsList = (): JSX.Element => {
           <p className='appConf-sectionControl__description'>
             Cambia el tamaño de fuente de las palabras de la prueba.
           </p>
-          <RangeSlider range={fontSize} onChange={handleFontSize} />
-        </section>
-
-        <section className='appConf-sectionControl'>
-          <h5 className='appConf-sectionControl__title'>Fuente de letra de la web</h5>
-          <p className='appConf-sectionControl__description'>
-            Cambia la fuente de letra de las palabras de la aplicación web.
-          </p>
-          <div className='appConf-sectionControl__options'>
-            {Object.values(EFont).map(option => (
-              <button
-                key={option}
-                className={acl(webFont === option)}
-                onClick={() => handleWebFont(option)}
-              >
-                {option}
-              </button>
-            ))}
-          </div>
+          <RangeSlider min={10} max={30} range={fontSize} onChange={handleFontSize} />
         </section>
 
         <section className='appConf-sectionControl'>
@@ -259,15 +251,24 @@ const ConfigurationsList = (): JSX.Element => {
             Permite cambiar el estilo del cursor durante la prueba.
           </p>
           <div className='appConf-sectionControl__options'>
-            {Object.values(ECursorStyle).map(option => (
-              <button
-                key={option}
-                className={acl(cursorStyle === option)}
-                onClick={() => handleCursorStyle(option)}
-              >
-                {option}
-              </button>
-            ))}
+            {Object.entries(ECursorStyle).map(option => {
+              const [name, value] = option
+              return (
+                <button
+                  key={name}
+                  className={acl(cursorStyle === name)}
+                  onClick={() => handleCursorStyle(name)}
+                >
+                  {value}
+                </button>
+              )
+            })}
+            <button
+              className={`flare ${acl((cursorStyle as any) === 'flare')}`}
+              onClick={() => handleCursorStyle('flare')}
+            >
+              <Logo />
+            </button>
           </div>
         </section>
       </div>

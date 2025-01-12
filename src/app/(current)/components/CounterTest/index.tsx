@@ -1,36 +1,36 @@
-import { formatTimeFromSeconds } from '@/shared/time'
-import { type JSX, useEffect } from 'react'
+import React from 'react'
+import { type JSX } from 'react'
 
-import useGameStore, { EGameStatus } from '../../store/useGameStore'
-import useGameTimeStore from '../../store/useGameTimeStore'
+import useCounterTest from '../../hooks/useCounterTest'
+import { ECounterStyle } from '../../store/useGameRulesStore'
+import CounterBar from '../CounterBar'
+import CounterClock from '../CounterClock'
+import CounterTextNormal from '../CounterTextNormal'
+import CounterTextSmall from '../CounterTextSmall'
 import './style.scss'
 
-const CounterTest = (): JSX.Element => {
-  const { gameTime, setGameTime } = useGameTimeStore()
-  const { gameStatus, setGameStatus } = useGameStore()
+export interface TCounterTestComponent {
+  hours: string
+  minutes: string
+  seconds: string
+  staticTime: number
+}
 
-  const { hours, minutes, seconds } = formatTimeFromSeconds(gameTime)
+const counterComponents = {
+  [ECounterStyle.TEXT]: CounterTextNormal,
+  [ECounterStyle.MINIATURE]: CounterTextSmall,
+  [ECounterStyle.BAR]: CounterBar,
+  [ECounterStyle.CLOCK]: CounterClock
+}
 
-  useEffect(() => {
-    if (gameStatus !== EGameStatus.PLAYING) return
-    const intervalId = setInterval(() => {
-      if (gameTime === 0) {
-        clearInterval(intervalId)
-        setGameStatus(EGameStatus.TIMEOUT)
-        return
-      }
-      const newTime = gameTime - 1
-      if (newTime >= 0) return setGameTime(newTime)
-    }, 1000)
+const CounterTest = (): JSX.Element | null => {
+  const { hours, minutes, seconds, counterStyle, staticTime } = useCounterTest()
 
-    return () => clearInterval(intervalId)
-  }, [gameStatus, gameTime, setGameTime, setGameStatus])
+  const RenderCounter = counterComponents[counterStyle]
 
   return (
     <section className='counterTest'>
-      <h2 className='counterTest-time'>
-        {hours}:{minutes}:{seconds}
-      </h2>
+      <RenderCounter hours={hours} minutes={minutes} seconds={seconds} staticTime={staticTime} />
     </section>
   )
 }

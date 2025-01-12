@@ -9,7 +9,7 @@ import useRenderTypingStore from '../store/useRenderTypingStore'
 
 const useTimerTest = () => {
   const { resetGameStore } = useGameStore()
-  const { gameTime, setGameTime } = useGameTimeStore()
+  const { gameTime, setGameTime, setStaticTime } = useGameTimeStore()
   const { setRenderKey } = useRenderTypingStore()
   const { type, setPhrase } = usePhraseStore()
 
@@ -22,8 +22,9 @@ const useTimerTest = () => {
     if (!selectedTime) return toast.error('Introduce un tiempo valido')
     if (gameTime === selectedTime) return
     setGameTime(selectedTime)
+    setStaticTime(selectedTime)
     handleResetGame(String(selectedTime))
-  }, [gameTime, setGameTime])
+  }, [gameTime, setGameTime, setStaticTime])
 
   const handleResetGame = useCallback(
     (renderKey: string) => {
@@ -55,6 +56,7 @@ const useTimerTest = () => {
   const handleClickDefaultTime = (tm: number) => {
     if (gameTime === tm) return
     setGameTime(tm)
+    setStaticTime(tm)
     handleResetGame(String(tm))
   }
 

@@ -1,6 +1,7 @@
 import { acl } from '@/shared/acl'
 import React, { JSX, useEffect, useState } from 'react'
 
+import useGameRulesStore, { EModeOption } from '../../store/useGameRulesStore'
 import useGameStore, { EGameStatus } from '../../store/useGameStore'
 import './style.scss'
 
@@ -77,7 +78,8 @@ const VirtualKeyboardComponent = () => {
 
 const VirtualKeyboard = (): JSX.Element | null => {
   const gameStatus = useGameStore(s => s.gameStatus)
-  if (gameStatus !== EGameStatus.PLAYING) return null
+  const { modeOption } = useGameRulesStore()
+  if (gameStatus !== EGameStatus.PLAYING || modeOption === EModeOption.FOCUSED) return null
   return <VirtualKeyboardComponent />
 }
 

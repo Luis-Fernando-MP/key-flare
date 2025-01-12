@@ -12,4 +12,4 @@ export const paragraphFont = Roboto_Mono({
   variable: '--paragraphFont'
 })
 
-export const bodyFonts = `${titleFont.variable} ${paragraphFont.variable}`
+export const bodyFonts = `${titleFont.className} ${paragraphFont.className}`

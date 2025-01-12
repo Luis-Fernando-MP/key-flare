@@ -16,48 +16,52 @@ import usePhraseStore, { ETypePhrase } from '../store/usePhraseStore'
 
 const useConfigurations = () => {
   const {
-    gameDifficulty,
-    setGameDifficulty,
-    restartKey,
-    setRestartKey,
-    modeOption,
-    setModeOption,
-    freedomMode,
-    setFreedomMode,
-    endOnError,
-    setEndOnError,
-    writingSound,
-    setWritingSound,
-    writingVolume,
-    setWritingVolume,
     counterStyle,
-    setCounterStyle,
-    fontSize,
-    setFontSize,
-    webFont,
-    setWebFont,
     cursorStyle,
-    setCursorStyle
+    endOnError,
+    fontSize,
+    freedomMode,
+    gameDifficulty,
+    modeOption,
+    restartKey,
+    webFont,
+    writingSound,
+    writingVolume,
+    writeValidation,
+
+    setCounterStyle,
+    setCursorStyle,
+    setEndOnError,
+    setFontSize,
+    setFreedomMode,
+    setGameDifficulty,
+    setModeOption,
+    setRestartKey,
+    setWebFont,
+    setWritingSound,
+    setWritingVolume,
+    setWriteValidation
   } = useGameRulesStore()
 
   const { resetGameStore, setGameStatus } = useGameStore()
-  const { setGameTime } = useGameTimeStore()
+  const { setGameTime, setStaticTime } = useGameTimeStore()
   const { type, setPhrase, setTotalLetters } = usePhraseStore()
 
   const handleGameDifficulty = (value: EGameDifficulty) => {
     setGameStatus(EGameStatus.IDLE)
     resetGameStore()
     setPhrase()
-
-    // random
     if (value === EGameDifficulty.NORMAL) {
       setGameTime()
+      setStaticTime()
     }
     if (value === EGameDifficulty.DIFFICULT) {
       setGameTime(20)
+      setStaticTime(20)
     }
     if (value === EGameDifficulty.MASTER) {
       setGameTime(10)
+      setStaticTime(10)
     }
     setGameDifficulty(value)
   }
@@ -66,12 +70,23 @@ const useConfigurations = () => {
     setRestartKey(value)
   }
 
-  const handleModeOption = (value: any) => {
+  const handleModeOption = (value: EModeOption) => {
     setModeOption(value)
+    if (value === EModeOption.BLIND) {
+      setCounterStyle(ECounterStyle.TEXT)
+    }
+
+    if (value === EModeOption.FOCUSED) {
+      setCounterStyle(ECounterStyle.MINIATURE)
+    }
   }
 
   const handleFreedomMode = (value: any) => {
     setFreedomMode(value)
+  }
+
+  const handleWriteValidation = (value: boolean) => {
+    setWriteValidation(value)
   }
 
   const handleEndOnError = (value: any) => {
@@ -94,7 +109,7 @@ const useConfigurations = () => {
     setFontSize(value)
   }
 
-  const handleWebFont = (value: any) => {
+  const handleWebFont = (value: EFont) => {
     setWebFont(value)
   }
 
@@ -114,6 +129,8 @@ const useConfigurations = () => {
     fontSize,
     webFont,
     cursorStyle,
+    writeValidation,
+
     handleGameDifficulty,
     handleRestartKey,
     handleModeOption,
@@ -124,7 +141,8 @@ const useConfigurations = () => {
     handleCounterStyle,
     handleFontSize,
     handleWebFont,
-    handleCursorStyle
+    handleCursorStyle,
+    handleWriteValidation
   }
 }
 

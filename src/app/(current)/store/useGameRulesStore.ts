@@ -44,6 +44,7 @@ export enum EWritingSound {
 export enum ECounterStyle {
   TEXT = 'Texto',
   BAR = 'Barra',
+  CLOCK = 'Reloj',
   MINIATURE = 'Miniatura'
 }
 
@@ -57,78 +58,63 @@ export enum EFont {
 export enum ECursorStyle {
   LINE = '|',
   DOT = '•',
-  DASH = '-',
-  TILDE = '~'
+  DASH = '-'
 }
 
 type TGameRules = {
   gameDifficulty: EGameDifficulty
-  setGameDifficulty: (gameDifficulty: EGameDifficulty) => void
-
   restartKey: ERestartKey
-  setRestartKey: (restartKey: ERestartKey) => void
-
   modeOption: EModeOption
-  setModeOption: (modeOption: EModeOption) => void
-
   freedomMode: EFreedomMode
-  setFreedomMode: (freedomMode: EFreedomMode) => void
-
   endOnError: EEndOnError
-  setEndOnError: (endOnError: EEndOnError) => void
-
   writingSound: EWritingSound
-  setWritingSound: (writingSound: EWritingSound) => void
-
   writingVolume: number
-  setWritingVolume: (writingVolume: number) => void
-
   counterStyle: ECounterStyle
-  setCounterStyle: (counterStyle: ECounterStyle) => void
-
   fontSize: number
-  setFontSize: (fontSize: number) => void
-
   webFont: EFont
-  setWebFont: (webFont: EFont) => void
-
   cursorStyle: ECursorStyle
+  writeValidation: boolean
+
+  setGameDifficulty: (gameDifficulty: EGameDifficulty) => void
+  setRestartKey: (restartKey: ERestartKey) => void
+  setModeOption: (modeOption: EModeOption) => void
+  setFreedomMode: (freedomMode: EFreedomMode) => void
+  setEndOnError: (endOnError: EEndOnError) => void
+  setWritingSound: (writingSound: EWritingSound) => void
+  setWritingVolume: (writingVolume: number) => void
+  setCounterStyle: (counterStyle: ECounterStyle) => void
+  setFontSize: (fontSize: number) => void
+  setWebFont: (webFont: EFont) => void
   setCursorStyle: (cursorStyle: ECursorStyle) => void
+  setWriteValidation: (writeValidation: boolean) => void
 }
 
 const useGameRulesStore = create<TGameRules>(set => ({
   gameDifficulty: EGameDifficulty.NORMAL,
-  setGameDifficulty: gameDifficulty => set({ gameDifficulty }),
-
   restartKey: ERestartKey.ESC,
-  setRestartKey: restartKey => set({ restartKey }),
-
   modeOption: EModeOption.AGILE,
-  setModeOption: modeOption => set({ modeOption }),
-
   freedomMode: EFreedomMode.DISABLED,
-  setFreedomMode: freedomMode => set({ freedomMode }),
-
   endOnError: EEndOnError.DISABLED,
-  setEndOnError: endOnError => set({ endOnError }),
-
   writingSound: EWritingSound.BEEP,
-  setWritingSound: writingSound => set({ writingSound }),
-
   writingVolume: 50,
-  setWritingVolume: writingVolume => set({ writingVolume }),
-
   counterStyle: ECounterStyle.TEXT,
-  setCounterStyle: counterStyle => set({ counterStyle }),
-
-  fontSize: 50,
-  setFontSize: fontSize => set({ fontSize }),
+  fontSize: 20,
+  cursorStyle: ECursorStyle.LINE,
+  writeValidation: false,
 
   webFont: EFont.ROBOTO_MONO,
+  setGameDifficulty: gameDifficulty => set({ gameDifficulty }),
+  setRestartKey: restartKey => set({ restartKey }),
+  setModeOption: modeOption => set({ modeOption }),
+  setFreedomMode: freedomMode => set({ freedomMode }),
+  setEndOnError: endOnError => set({ endOnError }),
+  setWritingSound: writingSound => set({ writingSound }),
+  setWritingVolume: writingVolume => set({ writingVolume }),
+  setCounterStyle: counterStyle => set({ counterStyle }),
+  setFontSize: fontSize => set({ fontSize }),
   setWebFont: webFont => set({ webFont }),
-
-  cursorStyle: ECursorStyle.LINE,
-  setCursorStyle: cursorStyle => set({ cursorStyle })
+  setCursorStyle: cursorStyle => set({ cursorStyle }),
+  setWriteValidation: writeValidation => set({ writeValidation })
 }))
 
 export default useGameRulesStore

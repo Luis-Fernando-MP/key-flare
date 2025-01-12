@@ -1,0 +1,106 @@
+@use '@sass/config/vars' as v;
+@use '@sass/utils/defs' as d;
+@use '@sass/utils/scrollbar' as *;
+
+.counterStyle-clock {
+  position: relative;
+
+  overflow: hidden;
+
+  width: 250px;
+  height: 250px;
+
+  background-color: rgb(v.$bg3);
+  border: 7px solid rgb(v.$bg2);
+  border-radius: 50%;
+
+  &__face {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgb(v.$bg2) -10%, rgb(v.$bg3));
+  }
+
+  &__circle {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 20px;
+    height: 20px;
+
+    background: radial-gradient(circle, rgb(v.$bg2), rgb(v.$bg3));
+    border-radius: 50%;
+  }
+
+  &__hour,
+  &__minute,
+  &__second {
+    position: absolute;
+    z-index: 1;
+    top: 25%;
+    left: 50%;
+    transform-origin: left;
+    transform: translate(-50%, -50%);
+  }
+
+  &__hour {
+    top: 32%;
+    width: 9px;
+    height: 35%;
+    background: linear-gradient(to bottom, #1d6981, #444);
+  }
+
+  &__minute {
+    top: 29.5%;
+    width: 6px;
+    height: 40%;
+    background: linear-gradient(to bottom, #bbb, #666);
+  }
+
+  &__second {
+    top: 27%;
+    width: 3px;
+    height: 45%;
+    background: red;
+  }
+
+  &__numbers {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    span {
+      position: absolute;
+      font-size: 20px;
+      font-weight: bold;
+      color: rgb(v.$fn3);
+
+      &:nth-child(1) {
+        top: v.$padding;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      &:nth-child(2) {
+        top: 50%;
+        right: v.$padding;
+        transform: translateY(-50%);
+      }
+
+      &:nth-child(3) {
+        bottom: v.$padding;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      &:nth-child(4) {
+        top: 50%;
+        left: v.$padding;
+        transform: translateY(-50%);
+      }
+    }
+  }
+}
