@@ -1,37 +1,30 @@
 import { acl } from '@/shared/acl'
 import Logo from '@/shared/assets/Logo'
 import RangeSlider from '@/shared/components/RangeSlider'
-import { type JSX, useRef } from 'react'
+import { type JSX } from 'react'
 
 import useConfigurations from '../../hooks/useConfigurations'
 import {
   ECounterStyle,
   ECursorStyle,
-  EEndOnError,
-  EFont,
   EFreedomMode,
   EGameDifficulty,
   EModeOption,
   ERestartKey,
   EWritingSound
 } from '../../store/useGameRulesStore'
-import useTestThresholds from '../../store/useTestThresholds'
+import AppTheme from '../AppTheme'
 
 const ConfigurationsList = (): JSX.Element => {
-  const $minPrecisionRef = useRef<HTMLInputElement>(null)
-  const $minSpeedRef = useRef<HTMLInputElement>(null)
-
   const {
     gameDifficulty,
     restartKey,
     modeOption,
     freedomMode,
-    endOnError,
     writingSound,
     writingVolume,
     counterStyle,
     fontSize,
-    webFont,
     cursorStyle,
     writeValidation,
 
@@ -39,17 +32,13 @@ const ConfigurationsList = (): JSX.Element => {
     handleRestartKey,
     handleModeOption,
     handleFreedomMode,
-    handleEndOnError,
     handleWritingSound,
     handleWritingVolume,
     handleCounterStyle,
     handleFontSize,
-    handleWebFont,
     handleCursorStyle,
     handleWriteValidation
   } = useConfigurations()
-
-  const { minSpeed, minPrecision, setMinPrecision, setMinSpeed } = useTestThresholds()
 
   return (
     <article className='appConf-list'>
@@ -119,48 +108,10 @@ const ConfigurationsList = (): JSX.Element => {
         </section>
       </div>
 
-      <div className='appConf-list__group' id='input'>
+      <div className='appConf-list__group' id='themes'>
         <section className='appConf-sectionControl'>
-          <h5 className='appConf-sectionControl__title'>Velocidad Mínima</h5>
-          <p className='appConf-sectionControl__description'>
-            Falla si tu velocidad baja de un límite.
-          </p>
-          <div className='appConf-sectionControl__options'>
-            <input type='number' defaultValue={minSpeed} ref={$minSpeedRef} min={80} max={500} />
-            <button
-              className='active'
-              onClick={() => {
-                if (!$minSpeedRef.current) return
-                setMinSpeed(Number($minSpeedRef.current.value))
-              }}
-            >
-              Cambiar velocidad
-            </button>
-          </div>
-        </section>
-        <section className='appConf-sectionControl'>
-          <h5 className='appConf-sectionControl__title'>Precisión Mínima</h5>
-          <p className='appConf-sectionControl__description'>
-            Falla si tu precisión baja de un límite.
-          </p>
-          <div className='appConf-sectionControl__options'>
-            <input
-              type='number'
-              defaultValue={minPrecision}
-              min={80}
-              ref={$minPrecisionRef}
-              max={500}
-            />
-            <button
-              className='active'
-              onClick={() => {
-                if (!$minPrecisionRef.current) return
-                setMinPrecision(Number($minPrecisionRef.current.value))
-              }}
-            >
-              Cambiar precisión
-            </button>
-          </div>
+          <h5 className='appConf-sectionControl__title'>Temas</h5>
+          <AppTheme />
         </section>
       </div>
 
@@ -206,19 +157,6 @@ const ConfigurationsList = (): JSX.Element => {
             </button>
           </div>
         </section>
-      </div>
-
-      <div className='appConf-list__group' id='sounds'>
-        <section className='appConf-sectionControl'>
-          <h5 className='appConf-sectionControl__title'>Volumen de escritura</h5>
-          <p className='appConf-sectionControl__description'>
-            Ajusta el volumen de los sonidos de escritura.
-          </p>
-          <RangeSlider range={writingVolume} onChange={handleWritingVolume} />
-        </section>
-      </div>
-
-      <div className='appConf-list__group' id='themes'>
         <section className='appConf-sectionControl'>
           <h5 className='appConf-sectionControl__title'>Estilo del contador</h5>
           <p className='appConf-sectionControl__description'>
@@ -270,6 +208,36 @@ const ConfigurationsList = (): JSX.Element => {
               <Logo />
             </button>
           </div>
+        </section>
+      </div>
+
+      <div className='appConf-list__group' id='sounds'>
+        <section className='appConf-sectionControl'>
+          <h5 className='appConf-sectionControl__title'>Tipos de sonido de escritura</h5>
+          <p className='appConf-sectionControl__description'>
+            Escoge entre los tipos de sonidos para la escritura.
+          </p>
+          <div className='appConf-sectionControl__options'>
+            {Object.entries(EWritingSound).map(option => {
+              const [name, value] = option
+              return (
+                <button
+                  key={name}
+                  className={acl(writingSound === name)}
+                  onClick={() => handleWritingSound(name)}
+                >
+                  {value}
+                </button>
+              )
+            })}
+          </div>
+        </section>
+        <section className='appConf-sectionControl'>
+          <h5 className='appConf-sectionControl__title'>Volumen de escritura</h5>
+          <p className='appConf-sectionControl__description'>
+            Ajusta el volumen de los sonidos de escritura.
+          </p>
+          <RangeSlider range={writingVolume} onChange={handleWritingVolume} />
         </section>
       </div>
     </article>

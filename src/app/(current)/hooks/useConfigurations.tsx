@@ -1,43 +1,29 @@
-import {
-  ECounterStyle,
-  ECursorStyle,
-  EEndOnError,
-  EFont,
-  EFreedomMode,
-  EGameDifficulty,
-  EModeOption,
-  ERestartKey,
-  EWritingSound
-} from '../store/useGameRulesStore'
+import { ECounterStyle, EGameDifficulty, EModeOption } from '../store/useGameRulesStore'
 import useGameRulesStore from '../store/useGameRulesStore'
 import useGameStore, { EGameStatus } from '../store/useGameStore'
 import useGameTimeStore from '../store/useGameTimeStore'
-import usePhraseStore, { ETypePhrase } from '../store/usePhraseStore'
+import usePhraseStore from '../store/usePhraseStore'
 
 const useConfigurations = () => {
   const {
     counterStyle,
     cursorStyle,
-    endOnError,
     fontSize,
     freedomMode,
     gameDifficulty,
     modeOption,
     restartKey,
-    webFont,
     writingSound,
     writingVolume,
     writeValidation,
 
     setCounterStyle,
     setCursorStyle,
-    setEndOnError,
     setFontSize,
     setFreedomMode,
     setGameDifficulty,
     setModeOption,
     setRestartKey,
-    setWebFont,
     setWritingSound,
     setWritingVolume,
     setWriteValidation
@@ -89,10 +75,6 @@ const useConfigurations = () => {
     setWriteValidation(value)
   }
 
-  const handleEndOnError = (value: any) => {
-    setEndOnError(value)
-  }
-
   const handleWritingSound = (value: any) => {
     setWritingSound(value)
   }
@@ -109,10 +91,6 @@ const useConfigurations = () => {
     setFontSize(value)
   }
 
-  const handleWebFont = (value: EFont) => {
-    setWebFont(value)
-  }
-
   const handleCursorStyle = (value: any) => {
     setCursorStyle(value)
   }
@@ -122,12 +100,10 @@ const useConfigurations = () => {
     restartKey,
     modeOption,
     freedomMode,
-    endOnError,
     writingSound,
     writingVolume,
     counterStyle,
     fontSize,
-    webFont,
     cursorStyle,
     writeValidation,
 
@@ -135,12 +111,10 @@ const useConfigurations = () => {
     handleRestartKey,
     handleModeOption,
     handleFreedomMode,
-    handleEndOnError,
     handleWritingSound,
     handleWritingVolume,
     handleCounterStyle,
     handleFontSize,
-    handleWebFont,
     handleCursorStyle,
     handleWriteValidation
   }

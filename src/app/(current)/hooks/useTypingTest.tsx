@@ -1,5 +1,6 @@
 import { normalizeCharacter } from '@/shared/text'
 import { Howl } from 'howler'
+import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef } from 'react'
 
 import useGameRulesStore, { EFreedomMode, EGameDifficulty } from '../store/useGameRulesStore'
@@ -7,7 +8,6 @@ import useGameStore, { EGameStatus } from '../store/useGameStore'
 import useGameTimeStore from '../store/useGameTimeStore'
 import usePhraseStore from '../store/usePhraseStore'
 import useRenderTypingStore from '../store/useRenderTypingStore'
-import useTestThresholds from '../store/useTestThresholds'
 
 const allowedKeysRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9,.!:;\-\s]$/
 const SPACE_KEY = ' '
@@ -23,16 +23,15 @@ const useTypingTest = () => {
     resetGameStore
   } = useGameStore()
   const { phrase } = usePhraseStore()
-  const { gameDifficulty, restartKey, freedomMode, writeValidation, writingVolume } =
+  const { gameDifficulty, restartKey, freedomMode, writeValidation, writingVolume, writingSound } =
     useGameRulesStore()
   const { setRenderKey } = useRenderTypingStore()
   const { setGameTime } = useGameTimeStore()
 
   const words = phrase.split(' ')
   const $inputRef = useRef<HTMLInputElement>(null)
+  const { push } = useRouter()
   const $paragraphRef = useRef<HTMLParagraphElement>(null)
-
-  const { minSpeed, minPrecision } = useTestThresholds()
 
   useEffect(() => {
     if (!$paragraphRef.current) return
@@ -98,6 +97,7 @@ const useTypingTest = () => {
     setTotalLetters(words.join('').length)
     const uniqueKey = `${Math.random()}-renderKEy-${Date.now()}`
     setRenderKey(uniqueKey)
+    push('/results')
   }
 
   const handleAudioPlay = useCallback(() => {
@@ -105,7 +105,7 @@ const useTypingTest = () => {
 
     try {
       const sound = new Howl({
-        src: ['/music/keyboard1.mp3'],
+        src: [`/music/${writingSound}.mp3`],
         volume: writingVolume / 100,
         rate: 1
       })
@@ -113,7 +113,7 @@ const useTypingTest = () => {
     } catch (error) {
       console.error('Error:', error)
     }
-  }, [writingVolume])
+  }, [writingVolume, writingSound])
 
   const handleInputDown = useCallback(
     (e: globalThis.KeyboardEvent) => {
