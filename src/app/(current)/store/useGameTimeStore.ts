@@ -10,7 +10,7 @@ type GameContextType = {
 
 export const DEFAULT_TIME_GAME = 30
 
-const useGameTimeStore = create<GameContextType>((set, get) => ({
+const useGameTimeStore = create<GameContextType>(set => ({
   gameTime: DEFAULT_TIME_GAME,
   staticTime: DEFAULT_TIME_GAME,
   setGameTime: (gameTime = DEFAULT_TIME_GAME) => set({ gameTime }),

@@ -1,4 +1,4 @@
-import { AUDIOS, playAudio } from '@/shared/audio'
+import { playAudio } from '@/shared/audio'
 import { normalizeCharacter } from '@/shared/text'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef } from 'react'

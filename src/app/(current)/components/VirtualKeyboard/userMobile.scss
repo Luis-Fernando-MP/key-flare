@@ -1,0 +1,14 @@
+@use '@sass/config/vars' as v;
+@use '@sass/utils/media' as m;
+
+@include m.smallScreen {
+  .keyboard {
+    scale: 0.8;
+  }
+}
+
+@include m.smallerScreen {
+  .keyboard {
+    display: none;
+  }
+}

@@ -1,11 +1,11 @@
 @use '@sass/config/vars' as v;
 @use '@sass/utils/defs' as d;
 
-.counterTest {
-  @include d.flex($ali: center);
+.counterStyle-small {
+  width: 100%;
 
-  width: fit-content;
-  min-width: 80%;
-  padding: v.$padding;
-  text-align: center;
+  font-size: v.$fH3;
+  font-weight: 400;
+  color: rgb(v.$tn1);
+  text-align: left;
 }

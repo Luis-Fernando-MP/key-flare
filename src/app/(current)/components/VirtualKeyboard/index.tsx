@@ -4,6 +4,7 @@ import React, { JSX, useEffect, useState } from 'react'
 import useGameRulesStore, { EModeOption } from '../../store/useGameRulesStore'
 import useGameStore, { EGameStatus } from '../../store/useGameStore'
 import './style.scss'
+import './userMobile.scss'
 
 const KEYBOARD_LAYOUT = [
   ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'Backspace'],

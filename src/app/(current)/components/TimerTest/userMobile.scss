@@ -13,3 +13,35 @@
     }
   }
 }
+
+@include m.smallScreen {
+  .counterTest {
+    width: 100%;
+  }
+
+  .counterStyle-text {
+    font-size: v.$fH1;
+  }
+
+  .counterStyle-clock {
+    width: 200px;
+    height: 200px;
+
+    span {
+      font-size: v.$fH4;
+      font-weight: 400;
+    }
+  }
+}
+
+@include m.smallerScreen {
+  .counterStyle-clock {
+    width: 125px;
+    height: 125px;
+
+    span {
+      font-size: v.$fP;
+      font-weight: 400;
+    }
+  }
+}

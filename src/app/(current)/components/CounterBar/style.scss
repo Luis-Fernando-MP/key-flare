@@ -10,15 +10,15 @@
   width: 100%;
   height: 25px;
 
-  background-color: rgb(v.$bg3);
-  border-radius: v.$radius * 0.3;
+  background-color: rgba(v.$tn1, 0.3);
+  border-radius: v.$radius;
 
   &__progress {
     width: 50%;
     height: 100%;
 
-    background-color: rgb(v.$bg2);
-    border-radius: v.$radius * 0.3;
+    background-color: rgb(v.$bg3);
+    border-radius: v.$radius;
 
     transition: width 1s linear;
   }

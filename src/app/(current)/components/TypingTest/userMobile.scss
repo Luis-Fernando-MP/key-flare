@@ -10,6 +10,12 @@
       font-size: 1rem;
     }
   }
+
+  .appFlare.playing {
+    .typingTest {
+      flex-direction: column;
+    }
+  }
 }
 
 @include m.smallScreen {
