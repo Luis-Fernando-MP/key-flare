@@ -4,6 +4,7 @@ import type { JSX } from 'react'
 
 import Chart from './components/Chart'
 import './style.scss'
+import './userMobile.scss'
 
 const Results = (): JSX.Element => {
   return (

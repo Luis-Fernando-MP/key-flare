@@ -31,8 +31,14 @@
     @include d.flex($ali: center);
 
     &__container {
-      width: 90% !important;
-      height: 450px !important;
+      overflow: auto;
+      width: 90%;
+      height: 450px;
+    }
+
+    &__wrapper {
+      width: 100%;
+      height: 100%;
     }
 
     &__info,

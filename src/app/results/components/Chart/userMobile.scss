@@ -1,0 +1,41 @@
+@use '@sass/config/vars' as v;
+@use '@sass/utils/media' as m;
+
+@include m.largeScreen {
+  .chart {
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    gap: v.$padding;
+
+    &-info {
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      > p {
+        display: none;
+      }
+    }
+
+    &-graphic {
+      &__container {
+        width: calc(100vw - v.$padding * 2);
+      }
+
+      &__wrapper {
+        width: 100%;
+        height: 100%;
+        margin: auto;
+      }
+    }
+  }
+}
+
+@include m.smallScreen {
+  .chart {
+    &-graphic {
+      &__wrapper {
+        width: 500px;
+      }
+    }
+  }
+}

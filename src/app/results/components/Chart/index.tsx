@@ -7,6 +7,7 @@ import { Bar } from 'react-chartjs-2'
 
 import useChart from '../../hooks/useChart'
 import './style.scss'
+import './userMobile.scss'
 
 interface IChart {
   className: string
@@ -67,7 +68,9 @@ const Chart = ({ className }: IChart): JSX.Element | null => {
           </p>
         </section>
         <div className='chart-graphic__container'>
-          <Bar data={chartData} options={chartOptions} />
+          <div className='chart-graphic__wrapper'>
+            <Bar data={chartData} options={chartOptions} />
+          </div>
         </div>
         <div className='chart-graphic__options'>
           <button onClick={handleScreenshot}>
