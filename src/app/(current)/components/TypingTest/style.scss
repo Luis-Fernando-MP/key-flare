@@ -12,6 +12,8 @@
     z-index: 2;
     top: 0;
     left: 50%;
+
+    opacity: 0;
   }
 
   &-phrase {
@@ -54,10 +56,6 @@
         75% {
           opacity: 0;
         }
-      }
-
-      &.active.is-last::before {
-        left: 100%;
       }
 
       &.correct {
@@ -107,10 +105,9 @@
       background-size: 15px;
     }
 
-    // LINE = '|',
-    // DOT = '•',
-    // DASH = '-',
-    // TILDE = '~'
+    .letter.active.is-last::before {
+      left: 100%;
+    }
 
     &.blind {
       .word.marked {

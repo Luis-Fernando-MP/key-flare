@@ -1,6 +1,7 @@
 'use client'
 
 import { acl } from '@/shared/acl'
+import { AUDIOS, playAudio } from '@/shared/audio'
 import { BeerIcon, EarthIcon, HashIcon, KeyboardIcon, QuoteIcon, RegexIcon } from 'lucide-react'
 import { type JSX, memo } from 'react'
 
@@ -39,6 +40,7 @@ const TypingOptions = ({ className }: ITypingOptions): JSX.Element => {
               key={value.name}
               className={`typingOptions-action ${acl(type === value.name)}`}
               onClick={() => {
+                playAudio(AUDIOS.TOUCH)
                 setPhrase({ phraseTYpe: value.name })
                 setTypePhrase(value.name)
               }}
@@ -48,20 +50,6 @@ const TypingOptions = ({ className }: ITypingOptions): JSX.Element => {
             </button>
           )
         })}
-
-        <button className={`typingOptions-action`}>
-          <EarthIcon />
-          Español
-        </button>
-        <button className={`typingOptions-action`}>
-          <KeyboardIcon />
-          Palabras
-        </button>
-        <button className={`typingOptions-action`}>
-          <HashIcon />
-          Con Números
-        </button>
-        <div className='typingOptions-modal'>modal</div>
       </div>
     </section>
   )

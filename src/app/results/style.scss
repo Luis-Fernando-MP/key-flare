@@ -1,0 +1,36 @@
+@use '@sass/config/vars' as v;
+@use '@sass/utils/defs' as d;
+@use '@sass/utils/scrollbar' as *;
+
+.results {
+  display: grid;
+  grid-template-areas:
+    'header'
+    'chart'
+    'footer';
+  grid-template-columns: 1fr;
+  grid-template-rows: 80px 1fr 250px;
+
+  width: 100vw;
+  height: 100vh;
+
+  &-header,
+  &-footer,
+  &-chart {
+    padding: v.$padding;
+  }
+
+  &-header {
+    grid-area: header;
+  }
+
+  &-footer {
+    grid-area: footer;
+  }
+
+  &-chart {
+    grid-area: chart;
+    height: auto;
+    background-color: rgb(v.$bg1);
+  }
+}

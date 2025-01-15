@@ -1,5 +1,5 @@
+import { AUDIOS, playAudio } from '@/shared/audio'
 import { normalizeCharacter } from '@/shared/text'
-import { Howl } from 'howler'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef } from 'react'
 
@@ -101,15 +101,11 @@ const useTypingTest = () => {
   }
 
   const handleAudioPlay = useCallback(() => {
-    console.log(writingVolume / 100)
-
     try {
-      const sound = new Howl({
-        src: [`/music/${writingSound}.mp3`],
-        volume: writingVolume / 100,
-        rate: 1
+      playAudio({
+        fileName: `/music/${writingSound}.mp3`,
+        volume: writingVolume / 100
       })
-      sound.play()
     } catch (error) {
       console.error('Error:', error)
     }

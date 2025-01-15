@@ -68,6 +68,7 @@ type TGameRules = {
   setFontSize: (fontSize: number) => void
   setCursorStyle: (cursorStyle: string) => void
   setWriteValidation: (writeValidation: boolean) => void
+  resetGameRules: () => void
 }
 
 const useGameRulesStore = create<TGameRules>(set => ({
@@ -75,8 +76,8 @@ const useGameRulesStore = create<TGameRules>(set => ({
   restartKey: ERestartKey.ESC,
   modeOption: EModeOption.AGILE,
   freedomMode: EFreedomMode.DISABLED,
-  writingSound: 'POP',
-  writingVolume: 50,
+  writingSound: 'CLICK',
+  writingVolume: 0,
   counterStyle: ECounterStyle.TEXT,
   fontSize: 20,
   cursorStyle: 'LINE',
@@ -91,7 +92,21 @@ const useGameRulesStore = create<TGameRules>(set => ({
   setCounterStyle: counterStyle => set({ counterStyle }),
   setFontSize: fontSize => set({ fontSize }),
   setCursorStyle: cursorStyle => set({ cursorStyle }),
-  setWriteValidation: writeValidation => set({ writeValidation })
+  setWriteValidation: writeValidation => set({ writeValidation }),
+  resetGameRules: () => {
+    set({
+      gameDifficulty: EGameDifficulty.NORMAL,
+      restartKey: ERestartKey.ESC,
+      modeOption: EModeOption.AGILE,
+      freedomMode: EFreedomMode.DISABLED,
+      writingSound: 'CLICK',
+      writingVolume: 0,
+      counterStyle: ECounterStyle.TEXT,
+      fontSize: 20,
+      cursorStyle: 'LINE',
+      writeValidation: false
+    })
+  }
 }))
 
 export default useGameRulesStore

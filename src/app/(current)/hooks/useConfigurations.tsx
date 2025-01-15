@@ -1,3 +1,7 @@
+import useAppTheme from '@/app/store/useAppTheme'
+import { AUDIOS, playAudio } from '@/shared/audio'
+import { useRouter } from 'next/navigation'
+
 import { ECounterStyle, EGameDifficulty, EModeOption } from '../store/useGameRulesStore'
 import useGameRulesStore from '../store/useGameRulesStore'
 import useGameStore, { EGameStatus } from '../store/useGameStore'
@@ -30,10 +34,14 @@ const useConfigurations = () => {
   } = useGameRulesStore()
 
   const { resetGameStore, setGameStatus } = useGameStore()
-  const { setGameTime, setStaticTime } = useGameTimeStore()
-  const { type, setPhrase, setTotalLetters } = usePhraseStore()
+  const { setGameTime, setStaticTime, resetGameTime } = useGameTimeStore()
+  const { setPhrase } = usePhraseStore()
+  const { resetGameRules } = useGameRulesStore()
+  const { resetTheme } = useAppTheme()
+  const { replace } = useRouter()
 
   const handleGameDifficulty = (value: EGameDifficulty) => {
+    playAudio(AUDIOS.TOUCH)
     setGameStatus(EGameStatus.IDLE)
     resetGameStore()
     setPhrase()
@@ -53,10 +61,12 @@ const useConfigurations = () => {
   }
 
   const handleRestartKey = (value: any) => {
+    playAudio(AUDIOS.TOUCH)
     setRestartKey(value)
   }
 
   const handleModeOption = (value: EModeOption) => {
+    playAudio(AUDIOS.TOUCH)
     setModeOption(value)
     if (value === EModeOption.BLIND) {
       setCounterStyle(ECounterStyle.TEXT)
@@ -68,14 +78,17 @@ const useConfigurations = () => {
   }
 
   const handleFreedomMode = (value: any) => {
+    playAudio(AUDIOS.TOUCH)
     setFreedomMode(value)
   }
 
   const handleWriteValidation = (value: boolean) => {
+    playAudio(AUDIOS.TOUCH)
     setWriteValidation(value)
   }
 
   const handleWritingSound = (value: any) => {
+    playAudio(AUDIOS.TOUCH)
     setWritingSound(value)
   }
 
@@ -84,15 +97,27 @@ const useConfigurations = () => {
   }
 
   const handleCounterStyle = (value: any) => {
+    playAudio(AUDIOS.TOUCH)
     setCounterStyle(value)
   }
 
   const handleFontSize = (value: any) => {
+    playAudio(AUDIOS.TOUCH)
     setFontSize(value)
   }
 
   const handleCursorStyle = (value: any) => {
+    playAudio(AUDIOS.TOUCH)
     setCursorStyle(value)
+  }
+
+  const handleGameReset = (): void => {
+    playAudio(AUDIOS.RESET)
+    resetGameStore()
+    resetGameTime()
+    resetGameRules()
+    resetTheme()
+    replace('/#behavior')
   }
 
   return {
@@ -116,7 +141,8 @@ const useConfigurations = () => {
     handleCounterStyle,
     handleFontSize,
     handleCursorStyle,
-    handleWriteValidation
+    handleWriteValidation,
+    handleGameReset
   }
 }
 

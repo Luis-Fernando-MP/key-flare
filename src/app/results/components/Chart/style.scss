@@ -1,0 +1,75 @@
+@use '@sass/config/vars' as v;
+@use '@sass/utils/defs' as d;
+
+.chart {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: 1fr;
+  height: 100%;
+
+  &-point {
+    font-size: v.$fXl;
+    line-height: 1;
+    color: rgb(v.$tn1);
+  }
+
+  &-info {
+    @include d.flex($ali: flex-end);
+
+    justify-content: center;
+    height: 100%;
+
+    &__point {
+      @include d.flex($gap: 0);
+    }
+  }
+
+  &-graphic {
+    width: 100%;
+    height: 100%;
+
+    @include d.flex($ali: center);
+
+    &__container {
+      width: 90% !important;
+      height: 450px !important;
+    }
+
+    &__info,
+    &__options {
+      @include d.flex($dir: row, $ali: center);
+
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    &__info {
+      width: fit-content;
+      padding: v.$padding v.$padding * 2;
+      background-color: rgb(v.$bg2);
+      border-radius: v.$radius;
+    }
+
+    &__options {
+      width: 100%;
+
+      button {
+        @include d.flex($dir: row, $ali: center, $gap: 5px);
+
+        padding: 5px v.$padding;
+        background-color: rgb(v.$bg2);
+        border-radius: 5px;
+      }
+    }
+  }
+
+  &.taking-screenshot {
+    .chart-graphic {
+      flex-direction: column-reverse;
+    }
+
+    .chart-graphic__options {
+      display: none;
+    }
+  }
+}

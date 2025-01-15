@@ -7,7 +7,6 @@
   justify-content: center;
 
   width: fit-content;
-  min-width: 80%;
   height: fit-content;
   max-height: 100%;
   margin: auto;
@@ -23,28 +22,19 @@
 
   &-action {
     gap: v.$padding;
-    height: 60px;
+    padding: v.$padding v.$padding * 2;
+    background-color: rgb(v.$bg2);
+    border-radius: v.$radius * 0.5;
 
     &.active {
-      color: rgb(v.$fn1);
+      transform: rotateZ(-3deg);
+      font-weight: 600;
+      color: rgb(v.$bg1);
+      background-color: rgb(v.$tn1);
 
       svg {
-        stroke: rgb(v.$fn1);
+        stroke: rgb(v.$bg1);
       }
     }
-  }
-
-  &-modal {
-    position: absolute;
-    bottom: -100px - v.$padding;
-    left: 0;
-
-    display: none;
-
-    width: 100%;
-    height: 100px;
-    padding: v.$padding;
-
-    border-radius: v.$radius;
   }
 }

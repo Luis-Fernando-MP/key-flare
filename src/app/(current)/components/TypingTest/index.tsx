@@ -9,7 +9,7 @@ import './style.scss'
 
 const TypingTest = (): JSX.Element => {
   return (
-    <main className='appFlare-typing typingTest'>
+    <main className='appFlare-typing typingTest animate-blurred-fade-in'>
       <TimerTest />
       <GameTyping />
       <VirtualKeyboard />

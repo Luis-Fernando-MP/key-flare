@@ -10,7 +10,7 @@ interface IHeader {
 
 const Header = ({ className }: IHeader): JSX.Element => {
   return (
-    <Link href='/' className={`${className}`}>
+    <Link href='/' className={`${className} header-logo`}>
       <Logo />
       <h1>KeyFlare</h1>
     </Link>

@@ -37,7 +37,8 @@ const ConfigurationsList = (): JSX.Element => {
     handleCounterStyle,
     handleFontSize,
     handleCursorStyle,
-    handleWriteValidation
+    handleWriteValidation,
+    handleGameReset
   } = useConfigurations()
 
   return (
@@ -238,6 +239,12 @@ const ConfigurationsList = (): JSX.Element => {
             Ajusta el volumen de los sonidos de escritura.
           </p>
           <RangeSlider range={writingVolume} onChange={handleWritingVolume} />
+        </section>
+
+        <section className='appConf-sectionControl'>
+          <button className='appConf-reset' onClick={handleGameReset}>
+            Restablecer configuración
+          </button>
         </section>
       </div>
     </article>

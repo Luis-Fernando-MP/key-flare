@@ -17,13 +17,13 @@ const RootLayout = async ({ children }: IRootLayout): Promise<JSX.Element> => {
   return (
     <html lang='es'>
       <body className={`${bodyFonts}`}>
-        <NextTopLoader />
+        <NextTopLoader color='rgb(var(--tn-primary))' showSpinner={false} />
         <Providers>{children}</Providers>
         <Toaster
           position='top-center'
           toastOptions={{
             className: 'toast',
-            position: 'top-center',
+            position: 'top-right',
             style: {
               background: 'rgb(var(--bg-primary))',
               color: 'rgb(var(--fnt-primary))'

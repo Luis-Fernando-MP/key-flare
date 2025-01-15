@@ -1,3 +1,4 @@
+import { AUDIOS, playAudio } from '@/shared/audio'
 import { formatTimeFromSeconds, validateTimeFormat } from '@/shared/time'
 import { ChangeEvent, KeyboardEvent, useCallback, useRef } from 'react'
 import toast from 'react-hot-toast'
@@ -19,7 +20,10 @@ const useTimerTest = () => {
     if (!$inputRef.current) return
 
     const selectedTime = validateTimeFormat($inputRef.current.value)
-    if (!selectedTime) return toast.error('Introduce un tiempo valido')
+    if (!selectedTime) {
+      playAudio(AUDIOS.ERROR)
+      return toast.error('Tiempo invalido. máximo 2h:59m:59s')
+    }
     if (gameTime === selectedTime) return
     setGameTime(selectedTime)
     setStaticTime(selectedTime)
@@ -37,7 +41,7 @@ const useTimerTest = () => {
       setRenderKey(renderKey)
 
       setPhrase()
-      // type en
+      playAudio(AUDIOS.TOUCH)
     },
     [resetGameStore, setRenderKey, type]
   )
