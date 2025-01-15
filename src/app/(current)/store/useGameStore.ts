@@ -19,7 +19,7 @@ type GameContextType = {
   resetGameStore: (gameStatus?: EGameStatus) => void
 }
 
-const useGameStore = create<GameContextType>((set, get) => ({
+const useGameStore = create<GameContextType>(set => ({
   gameStatus: EGameStatus.IDLE,
   totalLetters: 0,
   totalCorrect: 0,

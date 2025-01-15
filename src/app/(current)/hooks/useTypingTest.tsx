@@ -33,60 +33,7 @@ const useTypingTest = () => {
   const { push } = useRouter()
   const $paragraphRef = useRef<HTMLParagraphElement>(null)
 
-  useEffect(() => {
-    if (!$paragraphRef.current) return
-    const $firstWord = $paragraphRef.current.querySelector('.word')
-    $firstWord?.classList.add('active')
-    $firstWord?.querySelector('.letter')?.classList.add('active')
-  }, [phrase])
-
-  useEffect(() => {
-    const handleKeyPress = (e: globalThis.KeyboardEvent) => {
-      const target = e.target as HTMLElement
-      if (e.key === restartKey) return restartGame()
-
-      if (!allowedKeysRegex.test(e.key) && e.key !== BACKSPACE_KEY && !e.shiftKey) {
-        return e.preventDefault()
-      }
-      const isInputField =
-        target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable
-      if (isInputField && target.id !== 'typingTestInput') return
-      handleInputDown(e)
-      $inputRef.current?.focus()
-      if (gameStatus !== EGameStatus.IDLE) return
-      setGameStatus(EGameStatus.PLAYING)
-      if ($inputRef.current) $inputRef.current.value = ''
-    }
-    document.addEventListener('keydown', handleKeyPress)
-    return () => document.removeEventListener('keydown', handleKeyPress)
-  }, [gameStatus, gameDifficulty, restartKey])
-
-  useEffect(() => {
-    if (gameStatus !== EGameStatus.TIMEOUT) return
-    handleFinishGame()
-  }, [gameStatus])
-
-  useEffect(() => {
-    const handleBlur = () => {
-      if (gameStatus !== EGameStatus.PLAYING) return
-      setGameStatus(EGameStatus.IDLE)
-    }
-    $inputRef.current?.addEventListener('blur', handleBlur)
-    return () => {
-      $inputRef.current?.removeEventListener('blur', handleBlur)
-    }
-  }, [gameStatus])
-
-  const restartGame = () => {
-    if (!$inputRef.current || !$paragraphRef.current) return
-    $inputRef.current.value = ''
-    const uniqueKey = `${Math.random()}-renderKEy-${Date.now()}`
-    setRenderKey(uniqueKey)
-    resetGameStore(EGameStatus.PLAYING)
-    setGameTime()
-  }
-
-  const handleFinishGame = (): void => {
+  const handleFinishGame = useCallback(() => {
     if (!$inputRef.current || !$paragraphRef.current) return
     setGameStatus(EGameStatus.FINISHED)
     const totalIncorrectLetters = $paragraphRef.current.querySelectorAll('.letter.incorrect').length
@@ -98,18 +45,23 @@ const useTypingTest = () => {
     const uniqueKey = `${Math.random()}-renderKEy-${Date.now()}`
     setRenderKey(uniqueKey)
     push('/results')
-  }
+  }, [push, setGameStatus, setRenderKey, setTotalCorrect, setTotalErrors, setTotalLetters, words])
 
-  const handleAudioPlay = useCallback(() => {
-    try {
-      playAudio({
-        fileName: `/music/${writingSound}.mp3`,
-        volume: writingVolume / 100
-      })
-    } catch (error) {
-      console.error('Error:', error)
-    }
-  }, [writingVolume, writingSound])
+  useEffect(() => {
+    if (!$paragraphRef.current) return
+    const $firstWord = $paragraphRef.current.querySelector('.word')
+    $firstWord?.classList.add('active')
+    $firstWord?.querySelector('.letter')?.classList.add('active')
+  }, [phrase])
+
+  const restartGame = useCallback(() => {
+    if (!$inputRef.current || !$paragraphRef.current) return
+    $inputRef.current.value = ''
+    const uniqueKey = `${Math.random()}-renderKEy-${Date.now()}`
+    setRenderKey(uniqueKey)
+    resetGameStore(EGameStatus.PLAYING)
+    setGameTime()
+  }, [resetGameStore, setGameTime, setRenderKey])
 
   const handleInputDown = useCallback(
     (e: globalThis.KeyboardEvent) => {
@@ -177,8 +129,58 @@ const useTypingTest = () => {
           .join('')
       }
     },
-    [gameDifficulty, handleFinishGame, $paragraphRef, $inputRef]
+    [gameDifficulty, handleFinishGame, $paragraphRef, $inputRef, freedomMode]
   )
+
+  useEffect(() => {
+    const handleKeyPress = (e: globalThis.KeyboardEvent) => {
+      const target = e.target as HTMLElement
+      if (e.key === restartKey) return restartGame()
+
+      if (!allowedKeysRegex.test(e.key) && e.key !== BACKSPACE_KEY && !e.shiftKey) {
+        return e.preventDefault()
+      }
+      const isInputField =
+        target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable
+      if (isInputField && target.id !== 'typingTestInput') return
+      handleInputDown(e)
+      $inputRef.current?.focus()
+      if (gameStatus !== EGameStatus.IDLE) return
+      setGameStatus(EGameStatus.PLAYING)
+      if ($inputRef.current) $inputRef.current.value = ''
+    }
+    document.addEventListener('keydown', handleKeyPress)
+    return () => document.removeEventListener('keydown', handleKeyPress)
+  }, [gameStatus, gameDifficulty, restartKey, handleInputDown, restartGame, setGameStatus])
+
+  useEffect(() => {
+    if (gameStatus !== EGameStatus.TIMEOUT) return
+    handleFinishGame()
+  }, [gameStatus, handleFinishGame])
+
+  useEffect(() => {
+    const handleBlur = () => {
+      if (gameStatus !== EGameStatus.PLAYING) return
+      setGameStatus(EGameStatus.IDLE)
+    }
+    if (!($inputRef.current instanceof HTMLElement)) return
+    const inputNode = $inputRef.current
+    inputNode.addEventListener('blur', handleBlur)
+    return () => {
+      inputNode.removeEventListener('blur', handleBlur)
+    }
+  }, [gameStatus, setGameStatus])
+
+  const handleAudioPlay = useCallback(() => {
+    try {
+      playAudio({
+        fileName: `/music/${writingSound}.mp3`,
+        volume: writingVolume / 100
+      })
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }, [writingVolume, writingSound])
 
   const handleInputUp = () => {
     if (!$paragraphRef.current || !$inputRef.current) return

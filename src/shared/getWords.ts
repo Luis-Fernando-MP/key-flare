@@ -25,7 +25,7 @@ export function getSeductionPhrase(length: number = DEFAULT_TOTAL_LETTERS): stri
 
 function generateWords(phrases: string[], length: number) {
   const index = Math.floor(Math.random() * phrases.length)
-  let phrase = phrases[index]
+  const phrase = phrases[index]
   const words = phrase.split(' ')
   if (words.length < length) words.push('...')
   let i = 0

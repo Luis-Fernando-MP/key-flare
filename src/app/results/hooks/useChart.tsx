@@ -25,7 +25,7 @@ const useChart = () => {
   useEffect(() => {
     if (gameStatus === EGameStatus.FINISHED && totalTypedWords >= 0) return
     push('/')
-  }, [gameStatus, push, prefetch])
+  }, [gameStatus, push, prefetch, totalTypedWords])
 
   const wpm = useMemo(() => {
     return totalTypedWords > 0 ? Math.round(totalTypedWords / staticTime) : 0
@@ -67,7 +67,7 @@ const useChart = () => {
         }
       ]
     }
-  }, [totalTypedWords, totalErrors, totalCorrect])
+  }, [theme, totalTypedWords, totalErrors, totalCorrect])
 
   const chartOptions: any = useMemo(
     () => ({

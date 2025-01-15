@@ -20,7 +20,7 @@ const Page = (): JSX.Element => {
 
   useEffect(() => {
     prefetch('/results')
-  }, [])
+  }, [prefetch])
 
   return (
     <section
