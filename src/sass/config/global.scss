@@ -178,9 +178,9 @@ ul {
   color: rgb($tn1);
 }
 
-@include m.smallerScreen {
+@include m.mediumScreen {
   html {
-    font-size: 10px;
+    font-size: 12px;
   }
 }
 

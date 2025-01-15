@@ -2,11 +2,13 @@
 
 import { acl } from '@/shared/acl'
 import { AUDIOS, playAudio } from '@/shared/audio'
-import { BeerIcon, EarthIcon, HashIcon, KeyboardIcon, QuoteIcon, RegexIcon } from 'lucide-react'
+import { BeerIcon, MenuIcon, QuoteIcon, RegexIcon } from 'lucide-react'
 import { type JSX, memo } from 'react'
 
+import useMenu from '../../hooks/useMenu'
 import usePhraseStore, { ETypePhrase } from '../../store/usePhraseStore'
 import './style.scss'
+import './userMobile.scss'
 
 interface ITypingOptions {
   className: string
@@ -29,6 +31,7 @@ const typePhrases = {
 
 const TypingOptions = ({ className }: ITypingOptions): JSX.Element => {
   const { type, setTypePhrase, setPhrase } = usePhraseStore()
+  const { toggleMenu } = useMenu()
 
   return (
     <section className={`${className}`}>
@@ -46,10 +49,13 @@ const TypingOptions = ({ className }: ITypingOptions): JSX.Element => {
               }}
             >
               <value.Icon />
-              {key}
+              <span>{key}</span>
             </button>
           )
         })}
+        <button className='typingOptions-menu' onClick={toggleMenu}>
+          <MenuIcon />
+        </button>
       </div>
     </section>
   )

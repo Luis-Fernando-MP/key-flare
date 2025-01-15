@@ -6,6 +6,7 @@ import TimerTest from '../TimerTest'
 import VirtualKeyboard from '../VirtualKeyboard'
 import GameTyping from './gameTyping'
 import './style.scss'
+import './userMobile.scss'
 
 const TypingTest = (): JSX.Element => {
   return (

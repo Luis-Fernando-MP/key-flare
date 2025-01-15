@@ -17,7 +17,7 @@ const GameTypingComponent = (): JSX.Element => {
     <>
       <p
         className={`typingTest-phrase ${cursorStyle} ${acl(modeOption === EModeOption.BLIND, 'blind')} ${acl(modeOption === EModeOption.FOCUSED, 'focus')}`}
-        style={{ fontSize: `${fontSize / 10}rem` }}
+        style={{ fontSize: `clamp(1rem, ${fontSize / 10}rem, 2.5rem)` }}
         ref={$paragraphRef}
       >
         {words.map((word, index) => {

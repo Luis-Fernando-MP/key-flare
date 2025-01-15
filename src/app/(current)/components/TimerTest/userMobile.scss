@@ -1,0 +1,15 @@
+@use '@sass/config/vars' as v;
+@use '@sass/utils/media' as m;
+
+@include m.mediumScreen {
+  .timerApp {
+    flex-direction: column-reverse;
+    height: max-content;
+    text-align: center;
+
+    &-wrapper {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+}

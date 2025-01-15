@@ -1,0 +1,21 @@
+@use '@sass/config/vars' as v;
+@use '@sass/utils/media' as m;
+
+@include m.mediumScreen {
+  .typingTest {
+    flex-direction: column-reverse;
+
+    &-phrase {
+      width: 90%;
+      font-size: 1rem;
+    }
+  }
+}
+
+@include m.smallScreen {
+  .typingTest {
+    &-phrase {
+      font-size: 1.2rem !important;
+    }
+  }
+}

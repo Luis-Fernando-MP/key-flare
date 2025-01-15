@@ -8,6 +8,7 @@ import { type JSX, memo } from 'react'
 
 import { LINKS } from './links'
 import './style.scss'
+import './userMobile.scss'
 
 interface IFooter {
   className: string

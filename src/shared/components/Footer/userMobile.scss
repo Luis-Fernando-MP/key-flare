@@ -1,0 +1,53 @@
+@use '@sass/config/vars' as v;
+@use '@sass/utils/media' as m;
+
+@include m.largeScreen {
+  .appFoo {
+    height: max-content;
+
+    &-wrapper {
+      flex-direction: column;
+      gap: v.$padding * 3;
+    }
+
+    &-info {
+      text-align: center;
+
+      &__paragraph {
+        display: block;
+        width: 80%;
+        margin: auto;
+
+        p {
+          display: inline;
+        }
+      }
+    }
+
+    &-social__list {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    &-buyMe {
+      &__link {
+        width: 25px;
+        height: 25px;
+        padding: 5px;
+      }
+    }
+  }
+}
+
+@include m.smallScreen {
+  .appFoo-info__paragraph {
+    width: 90%;
+  }
+}
+
+@include m.smallerScreen {
+  .appFoo-info__paragraph {
+    width: 100%;
+  }
+}

@@ -1,38 +1,69 @@
 @use '@sass/config/vars' as v;
-@use '@sass/utils/defs' as d;
 @use '@sass/utils/media' as m;
 
-@include m.mediumScreen {
-  .main {
-    &-speed {
-      padding: v.$padding * 0.5 0;
-      text-align: center;
+@include m.bigScreen {
+  .appFlare {
+    grid-template-areas:
+      'logo options'
+      'typing typing'
+      'footer footer';
+
+    &-configurations {
+      pointer-events: all;
+
+      position: absolute;
+      z-index: 1;
+      top: 80px + v.$padding;
+      left: -370px;
+
+      width: 370px;
+      height: calc(100% - (80px + v.$padding));
+
+      background-color: rgb(v.$bg1);
+
+      transition: left 0.5s v.$bezier;
+
+      &.active {
+        left: 0;
+      }
+    }
+
+    &-typingOptions {
+      .typingOptions-menu {
+        display: block;
+      }
     }
   }
 }
 
-@include m.mediumScreen {
-  .main-static-header {
-    &::after {
-      background: radial-gradient(
-        circle 400px at 100% 100px,
-        rgb(112 61 230) 0%,
-        v.$tn2 50%,
-        transparent
-      );
+@include m.largeScreen {
+  .appFlare {
+    grid-template-areas:
+      'logo'
+      'options'
+      'typing'
+      'footer';
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+    height: auto;
+
+    &-configurations {
+      top: 0;
+      height: calc(100%);
+      padding-top: v.$padding * 2;
     }
   }
 }
 
 @include m.smallScreen {
-  .main-static-header {
-    &::after {
-      background: radial-gradient(
-        circle 300px at 100% 0,
-        rgb(112 61 230) 0%,
-        v.$tn2 50%,
-        transparent
-      );
-    }
+  .appFlare {
+    grid-template-columns: 100%;
+  }
+}
+
+@include m.smallerScreen {
+  .appFlare-configurations {
+    left: -100%;
+    width: 100%;
   }
 }

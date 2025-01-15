@@ -181,7 +181,7 @@ const ConfigurationsList = (): JSX.Element => {
           <p className='appConf-sectionControl__description'>
             Cambia el tamaño de fuente de las palabras de la prueba.
           </p>
-          <RangeSlider min={10} max={30} range={fontSize} onChange={handleFontSize} />
+          <RangeSlider min={15} max={25} range={fontSize} onChange={handleFontSize} />
         </section>
 
         <section className='appConf-sectionControl'>

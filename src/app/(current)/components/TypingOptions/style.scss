@@ -15,6 +15,16 @@
   background-color: rgb(v.$bg3);
   border-radius: v.$radius;
 
+  &-menu {
+    display: none;
+    padding: v.$padding;
+    border-radius: v.$radius;
+
+    svg {
+      stroke: rgb(v.$tn1);
+    }
+  }
+
   &,
   &-action {
     @include d.flex($dir: row, $ali: center, $gap: v.$padding * 2);

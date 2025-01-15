@@ -23,15 +23,34 @@
   }
 
   &-nav {
+    position: relative;
+
     flex-wrap: wrap;
+
     width: 90%;
     padding: v.$padding;
+
     background-color: rgb(v.$bg1);
 
     @include d.flex($dir: row, $ali: center);
 
     &__link.active {
       color: rgb(v.$tn1);
+    }
+
+    &__close {
+      position: absolute;
+      top: 50%;
+      right: v.$padding * 2;
+      transform: translateY(-50%);
+
+      display: none;
+
+      padding: v.$padding * 0.5;
+
+      background-color: rgb(v.$bg2);
+      border: 2px solid rgb(v.$tn1);
+      border-radius: v.$radius;
     }
   }
 

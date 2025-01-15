@@ -11,7 +11,9 @@ export const AUDIOS = {
   TOUCH: { fileName: '/music/interface/toc.mp3', volume: 0.2 },
   CHANGE: { fileName: '/music/interface/change.mp3', volume: 0.2 },
   OK: { fileName: '/music/interface/alert.mp3', volume: 0.2 },
-  WELCOME: { fileName: '/music/interface/welcome.mp3', volume: 0.3 }
+  WELCOME: { fileName: '/music/interface/welcome.mp3', volume: 0.3 },
+  MENU_ON: { fileName: '/music/interface/menu-on.mp3', volume: 0.3 },
+  MENU_OFF: { fileName: '/music/interface/menu-off.mp3', volume: 0.2 }
 }
 
 export const playAudio = ({ fileName, volume }: IPlayAudio) => {

@@ -9,6 +9,7 @@ import useGameStore, { EGameStatus } from '../../store/useGameStore'
 import { DEFAULT_TIME_GAME } from '../../store/useGameTimeStore'
 import CounterTest from '../CounterTest'
 import './style.scss'
+import './userMobile.scss'
 
 const defaultTimes = [10, 20, DEFAULT_TIME_GAME, 60, 90, 120]
 

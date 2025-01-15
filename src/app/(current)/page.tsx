@@ -11,6 +11,7 @@ import TypingOptions from './components/TypingOptions'
 import TypingTest from './components/TypingTest'
 import useGameStore, { EGameStatus } from './store/useGameStore'
 import './style.scss'
+import './userMobile.scss'
 
 const Page = (): JSX.Element => {
   const $appFlare = useRef<HTMLElement>(null)
