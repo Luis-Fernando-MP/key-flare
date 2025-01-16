@@ -33,6 +33,7 @@ Un agradecimiento especial a [Midudev](https://midu.dev) por su contenido educat
 ---
 
 ## Aplicación 🖼️
+
 <img src="https://github.com/user-attachments/assets/284d10be-ca4c-476c-aec4-315b1d748764" alt="key-flare" style="width:80%; max-width:800px;" />
 <img src="https://github.com/user-attachments/assets/1cb54adc-ad7e-46f2-9063-25e3f66730f0" alt="key-flare" style="width:80%; max-width:800px;" />
 <img src="https://github.com/user-attachments/assets/706f7abf-049c-4e27-81a6-1c844e1e8d45" alt="key-flare" style="width:80%; max-width:800px;" />
