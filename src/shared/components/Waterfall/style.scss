@@ -20,9 +20,9 @@
 
     width: $size;
     height: $size;
+    border-radius: 50%;
 
     background: $bg;
-    border-radius: 50%;
 
     animation: wave-effect 5s ease-out infinite;
 

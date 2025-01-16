@@ -7,9 +7,9 @@
 
   width: fit-content;
   padding: v.$padding;
+  border-radius: v.$radius;
 
   background-color: rgb(v.$bg3);
-  border-radius: v.$radius;
 
   @include d.flex($gap: v.$padding * 0.5);
 

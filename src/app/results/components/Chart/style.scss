@@ -52,8 +52,8 @@
     &__info {
       width: fit-content;
       padding: v.$padding v.$padding * 2;
-      background-color: rgb(v.$bg2);
       border-radius: v.$radius;
+      background-color: rgb(v.$bg2);
     }
 
     &__options {
@@ -63,8 +63,8 @@
         @include d.flex($dir: row, $ali: center, $gap: 5px);
 
         padding: 5px v.$padding;
-        background-color: rgb(v.$bg2);
         border-radius: 5px;
+        background-color: rgb(v.$bg2);
       }
     }
   }

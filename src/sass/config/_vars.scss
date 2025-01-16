@@ -81,8 +81,8 @@ $gr1: linear-gradient(140deg, rgb(255 100 50) 12.8%, rgb(255 0 101) 43.52%, rgb(
 
 @mixin border($bg: rgb($bg1)) {
   & {
-    background-color: $bg;
     border: 1.5px solid rgb($bg3);
+    background-color: $bg;
   }
 }
 
